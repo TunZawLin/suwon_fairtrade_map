@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>수원 공정무역 제품 판매처 지도</title>
+    <style>
+      :root {
+        --fair-blue: #12336e;
+        --fair-green: #2f7d59;
+        --fair-gold: #f2b600;
+        --ink: #202832;
+        --muted: #687482;
+        --line: #d9e0e5;
+        --paper: #f5f7f8;
+        --panel: #ffffff;
+        font-family:
+          "Noto Sans KR", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100svh;
+        padding: clamp(12px, 1.5vw, 28px);
+      }
+
+      .intro {
+        width: min(100%, 1800px);
+        margin: 0 auto 12px;
+      }
+
+      .intro-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .eyebrow {
+        margin: 0 0 5px;
+        color: var(--fair-green);
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--fair-blue);
+        font-size: clamp(1.45rem, 2.5vw, 2.05rem);
+        line-height: 1.18;
+      }
+
+      .intro-copy {
+        max-width: 850px;
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.55;
+      }
+
+      .language-toggle {
+        display: inline-flex;
+        flex: 0 0 auto;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+      }
+
+      .lang-button {
+        border: 0;
+        padding: 7px 12px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .lang-button[aria-pressed="true"] {
+        color: #fff;
+        background: var(--fair-blue);
+      }
+
+      .map-shell {
+        display: grid;
+        flex: 1 1 auto;
+        grid-template-columns: clamp(330px, 23vw, 430px) minmax(0, 1fr);
+        width: min(100%, 1800px);
+        height: clamp(640px, calc(100svh - 145px), 980px);
+        min-height: 0;
+        margin: 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        overflow: hidden;
+        background: var(--panel);
+        box-shadow: 0 14px 32px rgba(25, 39, 55, 0.12);
+      }
+
+      .directory {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      .directory-head {
+        padding: 16px 16px 14px;
+        color: #fff;
+        background: var(--fair-blue);
+      }
+
+      .directory-head h2 {
+        margin: 0 0 5px;
+        font-size: 1.05rem;
+        line-height: 1.3;
+      }
+
+      .directory-head p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.78rem;
+        line-height: 1.45;
+      }
+
+      .region-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px;
+        background: #f8fafb;
+      }
+
+      .region-bar strong {
+        color: var(--fair-blue);
+        font-size: 0.92rem;
+      }
+
+      .count {
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: #fff;
+        font-size: 0.74rem;
+        font-weight: 800;
+        background: var(--fair-green);
+      }
+
+      .place-list {
+        display: grid;
+        min-height: 0;
+        overflow: auto;
+      }
+
+      .place {
+        display: grid;
+        gap: 7px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 12px 14px;
+        color: var(--ink);
+        text-align: left;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .place:hover,
+      .place[aria-pressed="true"] {
+        background: #edf8ee;
+      }
+
+      .place.official {
+        background: #fff8ea;
+      }
+
+      .place.official:hover,
+      .place.official[aria-pressed="true"] {
+        background: #fff0cf;
+      }
+
+      .place-title {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+      }
+
+      .marker-number {
+        display: grid;
+        flex: 0 0 auto;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 900;
+        background: var(--fair-green);
+      }
+
+      .marker-number.official {
+        background: #d44f2f;
+      }
+
+      .tag {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 3px 8px;
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 800;
+        background: #d44f2f;
+      }
+
+      .place strong {
+        font-size: 0.9rem;
+        line-height: 1.35;
+      }
+
+      .place p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.45;
+      }
+
+      .products {
+        color: var(--fair-blue);
+        font-weight: 700;
+      }
+
+      .map-area {
+        position: relative;
+        height: 100%;
+        min-height: 0;
+        background: #eef2f5;
+      }
+
+      #map {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .map-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 20;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--fair-gold);
+        border-radius: 4px;
+        padding: 9px 11px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 8px 18px rgba(25, 39, 55, 0.12);
+      }
+
+      .map-status {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        color: var(--muted);
+        text-align: center;
+        background: #f8fafb;
+      }
+
+      .map-status.hidden {
+        display: none;
+      }
+
+      .map-badge strong {
+        display: block;
+        font-size: 0.88rem;
+      }
+
+      .map-badge span {
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
+      .source {
+        width: min(100%, 1800px);
+        margin: 10px auto 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .source a {
+        color: #2868b8;
+      }
+
+      .pin {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 900;
+        background: var(--fair-green);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      }
+
+      .pin.official {
+        background: #d44f2f;
+      }
+
+      .info {
+        position: relative;
+        width: 310px;
+        max-width: min(310px, 82vw);
+        padding: 11px 36px 11px 12px;
+      }
+
+      .info h3 {
+        margin: 0 0 7px;
+        color: var(--fair-blue);
+        font-size: 0.96rem;
+        line-height: 1.3;
+      }
+
+      .info p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .info-badge {
+        display: inline-flex;
+        width: fit-content;
+        margin: 0 0 9px;
+        border-radius: 999px;
+        padding: 3px 8px;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 900;
+        background: #d44f2f;
+      }
+
+      .info-fields {
+        display: grid;
+        gap: 7px;
+        margin: 0 0 10px;
+      }
+
+      .info-row {
+        display: grid;
+        grid-template-columns: 68px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+      }
+
+      .info-label {
+        color: var(--fair-blue);
+        font-size: 0.78rem;
+        font-weight: 900;
+        line-height: 1.45;
+      }
+
+      .info-row p {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .info-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .info a {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 6px 9px;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-decoration: none;
+        background: #fff;
+      }
+
+      .close-info {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: grid;
+        width: 22px;
+        height: 22px;
+        place-items: center;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        appearance: none;
+        color: #fff;
+        font-size: 0;
+        line-height: 1;
+        background: #d44f2f;
+        cursor: pointer;
+      }
+
+      .close-info::before,
+      .close-info::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 11px;
+        height: 2px;
+        border-radius: 999px;
+        background: #fff;
+        transform-origin: center;
+      }
+
+      .close-info::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      .close-info::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+
+      @media (max-width: 1100px) {
+        .map-shell {
+          grid-template-columns: clamp(300px, 32vw, 360px) minmax(0, 1fr);
+          height: clamp(620px, calc(100svh - 140px), 900px);
+        }
+      }
+
+      @media (max-width: 850px) {
+        h1 {
+          font-size: clamp(1.35rem, 5vw, 1.75rem);
+        }
+
+        .intro-top {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .map-shell {
+          grid-template-columns: 1fr;
+          height: auto;
+          min-height: 0;
+        }
+
+        .directory {
+          max-height: min(38svh, 360px);
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .map-area {
+          height: 62svh;
+          min-height: 430px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .map-area {
+          height: 58svh;
+          min-height: 360px;
+        }
+
+        .directory {
+          max-height: 34svh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="intro">
+        <div class="intro-top">
+          <div>
+            <h1 data-i18n="title">수원 공정무역 제품 판매처 맵</h1>
+          </div>
+          <div class="language-toggle" aria-label="Language">
+            <button class="lang-button" type="button" data-lang="ko" aria-pressed="true">한국어</button>
+            <button class="lang-button" type="button" data-lang="en" aria-pressed="false">English</button>
+          </div>
+        </div>
+        <p class="intro-copy" data-i18n="intro">
+          GCP 프로젝트를 위해 만든 수원 공정무역 매장 지도입니다.
+        </p>
+      </section>
+
+      <section class="map-shell" id="map-shell" aria-label="수원 공정무역 제품 판매처 지도">
+        <aside class="directory" id="directory" aria-label="판매처 목록">
+          <header class="directory-head">
+            <h2 data-i18n="directoryTitle">수원시 판매처 목록</h2>
+          </header>
+          <div class="region-bar">
+            <strong data-i18n="region">수원시</strong>
+            <span class="count" id="place-count">31 places</span>
+          </div>
+          <div class="place-list" id="place-list"></div>
+        </aside>
+
+        <div class="map-area">
+          <div id="map"></div>
+          <div class="map-status" id="map-status">Naver Map loading...</div>
+        </div>
+      </section>
+
+      <p class="source">
+        <span data-i18n="sourceLabel">판매처 데이터:</span>
+        <a href="https://www.suwon.go.kr/sw-www/deptHome/dep_eco/eco12/eco12_04.jsp" target="_blank" rel="noreferrer">
+          <span data-i18n="sourceSuwon">수원시 공정무역 제품 판매처 현황</span>
+        </a>.
+        <span data-i18n="referenceLabel">참고 형식:</span>
+        <a href="https://www.fairtrade.net/kr-ko/buy-fairtrade.html" target="_blank" rel="noreferrer">
+          <span data-i18n="sourceFairtrade">Fairtrade Korea 공정무역 가게 맵</span>
+        </a>.
+        <span data-i18n="stockNote">매장별 재고는 바뀔 수 있어 방문 전 확인이 좋아요.</span>
+      </p>
+    </main>
+
+    <script>
+      const shops = [
+        {
+          name: "노보텔 앰배서더 수원",
+          source: "official",
+          address: "경기 수원시 팔달구 덕영대로 902",
+          phone: "031-547-6600",
+          products: "치보 커피",
+          lat: 37.2677,
+          lng: 127.0007,
+        },
+        {
+          name: "지구인의 놀이터",
+          source: "official",
+          address: "경기 수원시 팔달구 신풍동 2",
+          phone: "0507-1446-5524",
+          products: "건바나나, 건파인애플, 오가닉 진저 다크초콜릿",
+          lat: 37.284,
+          lng: 127.0128,
+        },
+        {
+          name: "노리샌드위치 광교본점",
+          source: "official",
+          address: "경기 수원시 영통구 에듀타운로 102 광교중앙역 SKVIEW B동 147호",
+          phone: "031-258-8418",
+          products: "공정무역 원두 커피 / 아메리카노, 후추 등",
+          lat: 37.2909,
+          lng: 127.0494,
+        },
+        {
+          name: "수원로컬푸드직매장",
+          address: "경기 수원시 장안구 광교산로509번길 13",
+          phone: "031-252-0089",
+          products: "커피, 초콜릿, 사탕, 건파인애플, 설탕 등 30종",
+          lat: 37.3177,
+          lng: 127.017,
+        },
+        {
+          name: "플로르까사 장안구점",
+          address: "경기 수원시 장안구 덕영대로511번길 29-5",
+          phone: "031-271-3632",
+          products: "커피",
+          lat: 37.2973,
+          lng: 126.9871,
+        },
+        {
+          name: "경기도 업사이클플라자 카페",
+          address: "경기 수원시 권선구 서둔로 166",
+          phone: "031-299-7917",
+          products: "설탕, 커피, 카카오차, 캄보디아드립백 등 16종",
+          lat: 37.2715,
+          lng: 126.9892,
+        },
+        {
+          name: "모이커피클래식 카페",
+          address: "경기 수원시 팔달구 월드컵로 325",
+          phone: "031-258-3880",
+          products: "커피원두: 멕시코돈라파, 온두라스, 엘살바도르",
+          lat: 37.282,
+          lng: 127.0362,
+        },
+        {
+          name: "피스커피 열린무대점",
+          address: "경기 수원시 팔달구 효원로307번길 20",
+          phone: "",
+          products: "커피",
+          lat: 37.2631,
+          lng: 127.0321,
+        },
+        {
+          name: "자연드림 수원조원점",
+          address: "경기 수원시 장안구 송원로 121 계성빌딩 1층",
+          phone: "031-246-2050",
+          products: "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인",
+          lat: 37.3052,
+          lng: 127.0122,
+        },
+        {
+          name: "자연드림 수원금곡점",
+          address: "경기 수원시 권선구 금곡로 5-35",
+          phone: "031-293-2050",
+          products: "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인",
+          lat: 37.2748,
+          lng: 126.9558,
+        },
+        {
+          name: "자연드림 수원영통센터점",
+          address: "경기 수원시 영통구 영통로 145 코스모프라자 1,2층",
+          phone: "031-202-0330",
+          products: "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인",
+          lat: 37.2389,
+          lng: 127.0555,
+        },
+        {
+          name: "자연드림 수원이의점",
+          address: "경기 수원시 영통구 혜령로 8 1층",
+          phone: "031-212-8803",
+          products: "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인",
+          lat: 37.2928,
+          lng: 127.0449,
+        },
+        {
+          name: "경기남부두레생협 매교역점",
+          address: "경기 수원시 팔달구 세류로 89",
+          phone: "0507-1363-8489",
+          products: "커피",
+          lat: 37.264,
+          lng: 127.0163,
+        },
+        {
+          name: "경기남부두레생협 서수원점",
+          address: "경기 수원시 장안구 만석로20번길 38",
+          phone: "031-271-1077",
+          products: "커피",
+          lat: 37.2987,
+          lng: 126.994,
+        },
+        {
+          name: "경기남부두레생협 영통역점",
+          address: "경기 수원시 영통구 매영로345번길 7",
+          phone: "031-202-4888",
+          products: "계피",
+          lat: 37.2521,
+          lng: 127.0715,
+        },
+        {
+          name: "바른두레생협 매탄점",
+          address: "경기 수원시 영통구 매탄로168번길 2",
+          phone: "031-213-3309",
+          products: "마스코바도, 드립커피, 믹스커피, 건파인애플 등",
+          lat: 37.2583,
+          lng: 127.0465,
+        },
+        {
+          name: "바른두레생협 천천점",
+          address: "경기 수원시 장안구 덕영대로535번길 34, 104호",
+          phone: "031-269-6625",
+          products: "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인",
+          lat: 37.2961,
+          lng: 126.9822,
+        },
+        {
+          name: "바른두레생협 영통점",
+          address: "경기 수원시 영통구 청명로 73-1",
+          phone: "031-273-1258",
+          products: "마스코바도, 드립커피, 믹스커피, 건파인애플 등",
+          lat: 37.2564,
+          lng: 127.0759,
+        },
+        {
+          name: "한살림 장안점",
+          address: "경기 수원시 장안구 정자로 14-1",
+          phone: "031-271-5362",
+          products: "마스코바도",
+          lat: 37.2917,
+          lng: 126.9995,
+        },
+        {
+          name: "한살림 광교점",
+          address: "경기 수원시 영통구 센트럴파크로127번길 170",
+          phone: "031-216-6916",
+          products: "마스코바도",
+          lat: 37.2917,
+          lng: 127.0588,
+        },
+        {
+          name: "한살림 권선점",
+          address: "경기 수원시 권선구 세권로304번길 52",
+          phone: "031-224-3800",
+          products: "마스코바도",
+          lat: 37.2523,
+          lng: 127.0205,
+        },
+        {
+          name: "한살림 망포점",
+          address: "경기 수원시 영통구 영통로154번길 74",
+          phone: "0507-1308-8791",
+          products: "마스코바도",
+          lat: 37.2407,
+          lng: 127.0584,
+        },
+        {
+          name: "한살림 영통점",
+          address: "경기 수원시 영통구 영통로501번길 1-4",
+          phone: "031-203-2777",
+          products: "마스코바도",
+          lat: 37.2629,
+          lng: 127.0754,
+        },
+        {
+          name: "한살림 칠보점",
+          address: "경기 수원시 권선구 금곡로 19",
+          phone: "031-548-2684",
+          products: "커피, 마스코바도, 올리브유, 초콜릿, 카카오파이 등",
+          lat: 37.2755,
+          lng: 126.9568,
+        },
+        {
+          name: "아름다운가게 행궁점",
+          address: "경기 수원시 팔달구 중부대로 6, 1층",
+          phone: "031-258-1113",
+          products: "마스코바도, 모카믹스, 코코아, 후추 등",
+          lat: 37.2772,
+          lng: 127.0181,
+        },
+        {
+          name: "아름다운가게 수원정자점",
+          address: "경기 수원시 장안구 수성로 263",
+          phone: "031-251-1006",
+          products: "마스코바도",
+          lat: 37.2991,
+          lng: 127.0085,
+        },
+        {
+          name: "올가홀푸드 롯데타임빌라스 수원점",
+          address: "경기 수원시 권선구 세화로 134, 지하1층",
+          phone: "031-8066-0825",
+          products: "라포사다커피, 건살구",
+          lat: 37.264,
+          lng: 126.9974,
+        },
+        {
+          name: "쿠로이시로 카페",
+          address: "경기 수원시 영통구 영통로200번길 47",
+          phone: "010-6235-4029",
+          products: "커피",
+          lat: 37.2391,
+          lng: 127.0566,
+        },
+        {
+          name: "플로르까사 영통구점",
+          address: "경기 수원시 영통구 인계로220번길 6-29",
+          phone: "031-211-7673",
+          products: "커피",
+          lat: 37.2657,
+          lng: 127.0438,
+        },
+        {
+          name: "보난자커피 스타필드 수원점",
+          address: "경기 수원시 장안구 수성로 175, 1층",
+          phone: "031-519-5111",
+          products: "보난자 싱글 오리진 카바예로 온두라스",
+          lat: 37.2884,
+          lng: 126.9977,
+        },
+        {
+          name: "보난자커피 타임빌라스 수원점",
+          address: "경기 수원시 권선구 세화로 134, 3층",
+          phone: "0507-1314-3444",
+          products: "보난자 싱글 오리진 카바예로 온두라스",
+          lat: 37.2643,
+          lng: 126.9978,
+        },
+      ];
+
+      const translations = {
+        ko: {
+          documentTitle: "수원 공정무역 제품 판매처 맵",
+          title: "수원 공정무역 제품 판매처 맵",
+          intro: "GCP 프로젝트를 위해 만든 수원 공정무역 매장 지도입니다.",
+          mapShellLabel: "수원 공정무역 제품 판매처 지도",
+          directoryLabel: "판매처 목록",
+          directoryTitle: "수원시 판매처 목록",
+          region: "수원시",
+          count: (total) => `${total}곳`,
+          mapLoading: "Naver Map loading...",
+          sourceLabel: "판매처 데이터:",
+          sourceSuwon: "수원시 공정무역 제품 판매처 현황",
+          referenceLabel: "참고 형식:",
+          sourceFairtrade: "Fairtrade Korea 공정무역 가게 맵",
+          stockNote: "매장별 재고는 바뀔 수 있어 방문 전 확인이 좋아요.",
+          certified: "fairtrade-certified",
+          addressLabel: "주소",
+          productLabel: "제품",
+          phoneLabel: "전화",
+          naverMap: "네이버지도",
+          googleMap: "구글지도",
+          closePopup: "팝업 닫기",
+          authFailure:
+            "Naver 인증 실패: 이 URL이 키에 등록되어 있지 않거나 Dynamic Map이 활성화되지 않았습니다.",
+          selectedBlocked: (origin) =>
+            `매장을 선택했습니다. 지도가 보이지 않으면 Naver Cloud Web service URL에 ${origin}을 추가하세요.`,
+          apiWrong:
+            "Naver Map API가 올바르게 로드되지 않았습니다. Dynamic Map 키와 Web service URL을 다시 확인하세요.",
+          mapDidNotDraw: (origin) =>
+            `Naver Map은 로드됐지만 화면에 표시되지 않았습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
+          scriptFailed: (origin) =>
+            `Naver Map script를 불러오지 못했습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
+        },
+        en: {
+          documentTitle: "Suwon Fair Trade Shop Map",
+          title: "Suwon Fair Trade Shop Map",
+          intro: "A map of fair trade shops in Suwon, made for our GCP project.",
+          mapShellLabel: "Suwon fair trade shop map",
+          directoryLabel: "Shop list",
+          directoryTitle: "Suwon Shop List",
+          region: "Suwon",
+          count: (total) => `${total} places`,
+          mapLoading: "Naver Map loading...",
+          sourceLabel: "Shop data:",
+          sourceSuwon: "Suwon City's fair trade product seller list",
+          referenceLabel: "Map format reference:",
+          sourceFairtrade: "Fairtrade Korea shop map",
+          stockNote: "Product availability may change, so please check before visiting.",
+          certified: "fairtrade-certified",
+          addressLabel: "Address",
+          productLabel: "Products",
+          phoneLabel: "Phone",
+          naverMap: "Naver Map",
+          googleMap: "Google Maps",
+          closePopup: "Close popup",
+          authFailure:
+            "Naver auth failure: the key is not authorized for this URL or Dynamic Map is not enabled.",
+          selectedBlocked: (origin) =>
+            `Shop selected. If the map is still blocked, add ${origin} to the Naver Cloud Web service URL.`,
+          apiWrong:
+            "Naver Map API loaded incorrectly. Recheck the Dynamic Map key and Web service URL.",
+          mapDidNotDraw: (origin) =>
+            `Naver Map loaded but did not appear. Add this Web service URL in Naver Cloud: ${origin}`,
+          scriptFailed: (origin) =>
+            `The Naver Map script failed to load. Add this Web service URL in Naver Cloud: ${origin}`,
+        },
+      };
+
+      const nameTranslations = {
+        "노보텔 앰배서더 수원": "Novotel Ambassador Suwon",
+        "지구인의 놀이터": "Jiguyin-ui Noliteo",
+        "노리샌드위치 광교본점": "Nori Sandwich Gwanggyo Main Branch",
+        "수원로컬푸드직매장": "Suwon Local Food Direct Market",
+        "플로르까사 장안구점": "Flor Casa Jangan-gu Branch",
+        "경기도 업사이클플라자 카페": "Gyeonggi Upcycle Plaza Cafe",
+        "모이커피클래식 카페": "Moi Coffee Classic Cafe",
+        "피스커피 열린무대점": "Peace Coffee Yeollinmudae Branch",
+        "자연드림 수원조원점": "Natural Dream Suwon Jowon Branch",
+        "자연드림 수원금곡점": "Natural Dream Suwon Geumgok Branch",
+        "자연드림 수원영통센터점": "Natural Dream Suwon Yeongtong Center",
+        "자연드림 수원이의점": "Natural Dream Suwon Iui Branch",
+        "경기남부두레생협 매교역점": "Gyeonggi Nambu Dure Co-op Maegyo Station Branch",
+        "경기남부두레생협 서수원점": "Gyeonggi Nambu Dure Co-op West Suwon Branch",
+        "경기남부두레생협 영통역점": "Gyeonggi Nambu Dure Co-op Yeongtong Station Branch",
+        "바른두레생협 매탄점": "Bareun Dure Co-op Maetan Branch",
+        "바른두레생협 천천점": "Bareun Dure Co-op Cheoncheon Branch",
+        "바른두레생협 영통점": "Bareun Dure Co-op Yeongtong Branch",
+        "한살림 장안점": "Hansalim Jangan Branch",
+        "한살림 광교점": "Hansalim Gwanggyo Branch",
+        "한살림 권선점": "Hansalim Gwonseon Branch",
+        "한살림 망포점": "Hansalim Mangpo Branch",
+        "한살림 영통점": "Hansalim Yeongtong Branch",
+        "한살림 칠보점": "Hansalim Chilbo Branch",
+        "아름다운가게 행궁점": "Beautiful Store Haenggung Branch",
+        "아름다운가게 수원정자점": "Beautiful Store Suwon Jeongja Branch",
+        "올가홀푸드 롯데타임빌라스 수원점": "ORGA Whole Foods Lotte Time Villas Suwon Branch",
+        "쿠로이시로 카페": "Kuroishiro Cafe",
+        "플로르까사 영통구점": "Flor Casa Yeongtong-gu Branch",
+        "보난자커피 스타필드 수원점": "Bonanza Coffee Starfield Suwon Branch",
+        "보난자커피 타임빌라스 수원점": "Bonanza Coffee Time Villas Suwon Branch",
+      };
+
+      const productTranslations = {
+        "치보 커피": "Tchibo coffee",
+        "건바나나, 건파인애플, 오가닉 진저 다크초콜릿":
+          "Dried banana, dried pineapple, organic ginger dark chocolate",
+        "공정무역 원두 커피 / 아메리카노, 후추 등":
+          "Fair trade coffee beans / Americano, pepper, etc.",
+        "커피, 초콜릿, 사탕, 건파인애플, 설탕 등 30종":
+          "Coffee, chocolate, candy, dried pineapple, sugar, etc. (30 items)",
+        "커피": "Coffee",
+        "설탕, 커피, 카카오차, 캄보디아드립백 등 16종":
+          "Sugar, coffee, cacao tea, Cambodia drip bag coffee, etc. (16 items)",
+        "커피원두: 멕시코돈라파, 온두라스, 엘살바도르":
+          "Coffee beans: Mexico Don Rafa, Honduras, El Salvador",
+        "커피, 마스코바도, 코코넛오일, 초콜릿, 사탕, 와인":
+          "Coffee, muscovado sugar, coconut oil, chocolate, candy, wine",
+        "계피": "Cinnamon",
+        "마스코바도, 드립커피, 믹스커피, 건파인애플 등":
+          "Muscovado sugar, drip coffee, instant coffee mix, dried pineapple, etc.",
+        "마스코바도": "Muscovado sugar",
+        "커피, 마스코바도, 올리브유, 초콜릿, 카카오파이 등":
+          "Coffee, muscovado sugar, olive oil, chocolate, cacao pies, etc.",
+        "마스코바도, 모카믹스, 코코아, 후추 등":
+          "Muscovado sugar, mocha mix, cocoa, pepper, etc.",
+        "라포사다커피, 건살구": "La Posada coffee, dried apricots",
+        "보난자 싱글 오리진 카바예로 온두라스":
+          "Bonanza Single Origin Caballero Honduras",
+      };
+
+      function naverMapLink(address) {
+        return `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
+      }
+
+      function googleMapLink(address) {
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+      }
+
+      const status = document.querySelector("#map-status");
+      const list = document.querySelector("#place-list");
+      const placeCount = document.querySelector("#place-count");
+      const mapShell = document.querySelector("#map-shell");
+      const directory = document.querySelector("#directory");
+      const serviceOrigin = window.location.origin;
+      const markers = [];
+      const infoWindows = [];
+      const initialMapCenter = { lat: 37.2498, lng: 127.0754 };
+      const initialMapZoom = 15;
+      let map = null;
+      let mapsApi = null;
+      let selectedShop = 0;
+      let currentLanguage = localStorage.getItem("fairTradeMapLanguage") === "en" ? "en" : "ko";
+
+      function t(key, ...args) {
+        const value = translations[currentLanguage][key] ?? translations.ko[key] ?? key;
+        return typeof value === "function" ? value(...args) : value;
+      }
+
+      function shopName(shop) {
+        return currentLanguage === "en" ? nameTranslations[shop.name] || shop.name : shop.name;
+      }
+
+      function shopProducts(shop) {
+        return currentLanguage === "en"
+          ? productTranslations[shop.products] || shop.products
+          : shop.products;
+      }
+
+      function renderStaticText() {
+        document.documentElement.lang = currentLanguage;
+        document.title = t("documentTitle");
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          element.textContent = t(element.dataset.i18n);
+        });
+        placeCount.textContent = t("count", shops.length);
+        mapShell.setAttribute("aria-label", t("mapShellLabel"));
+        directory.setAttribute("aria-label", t("directoryLabel"));
+        document.querySelectorAll("[data-lang]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.lang === currentLanguage));
+        });
+      }
+
+      function createInfoContent(shop, index) {
+        return `
+          <div class="info">
+            <button class="close-info" type="button" data-close-info="${index}" onclick="window.closeInfoWindow(${index}); return false;" aria-label="${t("closePopup")}">×</button>
+            <h3>${shopName(shop)}</h3>
+            ${shop.source === "official" ? `<span class="info-badge">${t("certified")}</span>` : ""}
+            <div class="info-fields">
+              <div class="info-row">
+                <span class="info-label">${t("addressLabel")}</span>
+                <p>${shop.address}</p>
+              </div>
+              <div class="info-row">
+                <span class="info-label">${t("productLabel")}</span>
+                <p>${shopProducts(shop)}</p>
+              </div>
+              ${
+                shop.phone
+                  ? `<div class="info-row">
+                      <span class="info-label">${t("phoneLabel")}</span>
+                      <p>${shop.phone}</p>
+                    </div>`
+                  : ""
+              }
+            </div>
+            <div class="info-actions">
+              <a href="${naverMapLink(shop.address)}" target="_blank" rel="noreferrer">${t("naverMap")}</a>
+              <a href="${googleMapLink(shop.address)}" target="_blank" rel="noreferrer">${t("googleMap")}</a>
+            </div>
+          </div>
+        `;
+      }
+
+      function refreshInfoWindows() {
+        infoWindows.forEach((infoWindow, index) => {
+          if (typeof infoWindow.setContent === "function") {
+            infoWindow.setContent(createInfoContent(shops[index], index));
+          }
+        });
+        markers.forEach((marker, index) => {
+          if (typeof marker.setTitle === "function") {
+            marker.setTitle(shopName(shops[index]));
+          }
+        });
+      }
+
+      function setLanguage(language) {
+        currentLanguage = language;
+        localStorage.setItem("fairTradeMapLanguage", currentLanguage);
+        renderStaticText();
+        renderList();
+        refreshInfoWindows();
+      }
+
+      document.querySelectorAll("[data-lang]").forEach((button) => {
+        button.addEventListener("click", () => setLanguage(button.dataset.lang));
+      });
+
+      window.navermap_authFailure = function navermap_authFailure() {
+        status.classList.remove("hidden");
+        status.textContent = t("authFailure");
+      };
+
+      function renderList() {
+        list.innerHTML = "";
+        shops.forEach((shop, index) => {
+          const number = index + 1;
+          const item = document.createElement("button");
+          item.className = `place ${shop.source === "official" ? "official" : ""}`;
+          item.type = "button";
+          item.dataset.shop = String(index);
+          item.setAttribute("aria-pressed", String(index === selectedShop));
+          item.innerHTML = `
+            <span class="place-title">
+              <span class="marker-number ${shop.source === "official" ? "official" : ""}">${number}</span>
+              <strong>${shopName(shop)}</strong>
+            </span>
+            ${shop.source === "official" ? `<span class="tag">${t("certified")}</span>` : ""}
+            <p>${shop.address}</p>
+            <p class="products">${shopProducts(shop)}</p>
+          `;
+          item.addEventListener("click", () => selectShop(index, true));
+          list.appendChild(item);
+        });
+      }
+
+      function updateSelectedListItem() {
+        document.querySelectorAll(".place").forEach((button) => {
+          button.setAttribute("aria-pressed", String(Number(button.dataset.shop) === selectedShop));
+        });
+      }
+
+      function selectShop(index, moveMap) {
+        selectedShop = index;
+        updateSelectedListItem();
+        if (!map || !markers[index] || !infoWindows[index]) {
+          status.classList.remove("hidden");
+          status.textContent = t("selectedBlocked", serviceOrigin);
+          return;
+        }
+
+        infoWindows.forEach((infoWindow) => infoWindow.close());
+        const shop = shops[index];
+        if (moveMap) {
+          map.setCenter(new mapsApi.LatLng(shop.lat, shop.lng));
+          map.setZoom(15);
+        }
+        infoWindows[index].open(map, markers[index]);
+      }
+
+      window.closeInfoWindow = function closeInfoWindow(index) {
+        if (typeof index === "number" && infoWindows[index]) {
+          infoWindows[index].close();
+          return;
+        }
+        infoWindows.forEach((infoWindow) => infoWindow.close());
+      };
+
+      document.addEventListener("click", (event) => {
+        const closeButton = event.target.closest("[data-close-info]");
+        if (!closeButton) return;
+        window.closeInfoWindow(Number(closeButton.dataset.closeInfo));
+      });
+
+      function getMaps(api) {
+        if (api && api.Map) return api;
+        if (api && api.maps && api.maps.Map) return api.maps;
+        if (window.naver && window.naver.maps && window.naver.maps.Map) return window.naver.maps;
+        return null;
+      }
+
+      window.initMap = function initMap(api) {
+        const maps = getMaps(api);
+        if (!maps) {
+          status.classList.remove("hidden");
+          status.textContent = t("apiWrong");
+          return;
+        }
+
+        mapsApi = maps;
+        status.textContent = t("mapLoading");
+
+        map = new maps.Map("map", {
+          center: new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng),
+          zoom: initialMapZoom,
+          minZoom: 11,
+          maxZoom: 18,
+          zoomControl: true,
+          zoomControlOptions: {
+            position: maps.Position.TOP_RIGHT,
+          },
+        });
+
+        shops.forEach((shop, index) => {
+          const number = index + 1;
+          const position = new maps.LatLng(shop.lat, shop.lng);
+          const markerOptions = {
+            position,
+            map,
+            title: shopName(shop),
+          };
+          if (shop.source === "official") {
+            markerOptions.icon = {
+              content: `<span class="pin official">${number}</span>`,
+              size: new maps.Size(32, 32),
+              anchor: new maps.Point(16, 16),
+            };
+          }
+          const marker = new maps.Marker(markerOptions);
+
+          const infoWindow = new maps.InfoWindow({
+            content: createInfoContent(shop, index),
+            borderWidth: 0,
+            backgroundColor: "white",
+            anchorSize: new maps.Size(10, 10),
+            pixelOffset: new maps.Point(0, -10),
+          });
+
+          maps.Event.addListener(marker, "click", () => selectShop(index, false));
+          markers.push(marker);
+          infoWindows.push(infoWindow);
+        });
+
+        window.addEventListener("resize", () => {
+          maps.Event.trigger(map, "resize");
+        });
+
+        setTimeout(() => {
+          maps.Event.trigger(map, "resize");
+          map.setCenter(new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng));
+          map.setZoom(initialMapZoom);
+          status.classList.add("hidden");
+          console.log("Naver map initialized", document.querySelector("#map").children.length);
+        }, 500);
+
+        setTimeout(() => {
+          const mapElement = document.querySelector("#map");
+          const hasMapNodes = mapElement && mapElement.children.length > 0;
+          if (!hasMapNodes) {
+            status.classList.remove("hidden");
+            status.textContent = t("mapDidNotDraw", serviceOrigin);
+          }
+        }, 1600);
+      };
+
+      window.naverMapLoadFailed = function naverMapLoadFailed() {
+        status.classList.remove("hidden");
+        status.textContent = t("scriptFailed", serviceOrigin);
+      };
+
+      renderStaticText();
+      renderList();
+    </script>
+    <script
+      src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=jmjfpzqt8g&v=20260604"
+      onload="initMap()"
+      onerror="naverMapLoadFailed()"
+    ></script>
+  </body>
+</html>
