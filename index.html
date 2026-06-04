@@ -45,7 +45,8 @@
       }
 
       .intro {
-        width: min(100%, 1680px);
+        width: 100%;
+        max-width: 1680px;
         margin: 0 auto 12px;
       }
 
@@ -106,7 +107,8 @@
         display: grid;
         flex: 1 1 auto;
         grid-template-columns: clamp(330px, 22vw, 405px) minmax(0, 1fr);
-        width: min(100%, 1680px);
+        width: 100%;
+        max-width: 1680px;
         height: clamp(620px, calc(100svh - 145px), 940px);
         min-height: 0;
         margin: 0 auto;
@@ -307,7 +309,8 @@
       }
 
       .source {
-        width: min(100%, 1680px);
+        width: 100%;
+        max-width: 1680px;
         margin: 10px auto 0;
         color: var(--muted);
         font-size: 0.78rem;
