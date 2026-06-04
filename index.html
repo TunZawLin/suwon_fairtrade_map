@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>수원 공정무역 제품 판매처 맵</title>
+    <title>수원 공정무역 제품 판매처 지도</title>
     <style>
       :root {
         --fair-blue: #12336e;
@@ -52,6 +52,13 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 16px;
+      }
+
+      .eyebrow {
+        margin: 0 0 5px;
+        color: var(--fair-green);
+        font-size: 0.82rem;
+        font-weight: 800;
       }
 
       h1 {
@@ -126,6 +133,13 @@
         margin: 0 0 5px;
         font-size: 0.92rem;
         line-height: 1.3;
+      }
+
+      .directory-head p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.78rem;
+        line-height: 1.45;
       }
 
       .region-bar {
@@ -250,6 +264,20 @@
         min-height: 620px;
       }
 
+      .map-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 20;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--fair-gold);
+        border-radius: 4px;
+        padding: 9px 11px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 8px 18px rgba(25, 39, 55, 0.12);
+      }
+
       .map-status {
         position: absolute;
         inset: 0;
@@ -266,6 +294,16 @@
         display: none;
       }
 
+      .map-badge strong {
+        display: block;
+        font-size: 0.88rem;
+      }
+
+      .map-badge span {
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
       .source {
         max-width: 1180px;
         margin: 10px auto 0;
@@ -279,21 +317,17 @@
       }
 
       .pin {
-        display: grid;
-        width: 32px;
-        height: 32px;
-        place-items: center;
-        border: 3px solid #fff;
-        border-radius: 50%;
-        color: #fff;
-        font-size: 0.8rem;
-        font-weight: 900;
-        background: var(--fair-green);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        display: block;
+        width: 28px;
+        height: 38px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
       }
 
       .pin.official {
-        background: #d44f2f;
+        background-image: url("data:image/svg+xml,%3Csvg width='28' height='38' viewBox='0 0 28 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 37C14 37 26 22.5 26 13.8C26 6.7 20.6 1 14 1C7.4 1 2 6.7 2 13.8C2 22.5 14 37 14 37Z' fill='%23d44f2f' stroke='white' stroke-width='2'/%3E%3Ccircle cx='14' cy='13.8' r='4.6' fill='white'/%3E%3C/svg%3E");
+        filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.3));
       }
 
       .info {
@@ -340,6 +374,11 @@
         grid-template-columns: 68px minmax(0, 1fr);
         gap: 10px;
         align-items: start;
+      }
+
+      html[lang="ko"] .info-row {
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 7px;
       }
 
       .info-label {
@@ -798,6 +837,8 @@
             `매장을 선택했습니다. 지도가 보이지 않으면 Naver Cloud Web service URL에 ${origin}을 추가하세요.`,
           apiWrong:
             "Naver Map API가 올바르게 로드되지 않았습니다. Dynamic Map 키와 Web service URL을 다시 확인하세요.",
+          mapDidNotDraw: (origin) =>
+            `Naver Map은 로드됐지만 화면에 표시되지 않았습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
           scriptFailed: (origin) =>
             `Naver Map script를 불러오지 못했습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
         },
@@ -829,6 +870,8 @@
             `Shop selected. If the map is still blocked, add ${origin} to the Naver Cloud Web service URL.`,
           apiWrong:
             "Naver Map API loaded incorrectly. Recheck the Dynamic Map key and Web service URL.",
+          mapDidNotDraw: (origin) =>
+            `Naver Map loaded but did not appear. Add this Web service URL in Naver Cloud: ${origin}`,
           scriptFailed: (origin) =>
             `The Naver Map script failed to load. Add this Web service URL in Naver Cloud: ${origin}`,
         },
@@ -1113,9 +1156,9 @@
           };
           if (shop.source === "official") {
             markerOptions.icon = {
-              content: `<span class="pin official">${number}</span>`,
-              size: new maps.Size(32, 32),
-              anchor: new maps.Point(16, 16),
+              content: `<span class="pin official" aria-label="fairtrade-certified shop"></span>`,
+              size: new maps.Size(28, 38),
+              anchor: new maps.Point(14, 38),
             };
           }
           const marker = new maps.Marker(markerOptions);
@@ -1142,7 +1185,17 @@
           map.setCenter(new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng));
           map.setZoom(initialMapZoom);
           status.classList.add("hidden");
+          console.log("Naver map initialized", document.querySelector("#map").children.length);
         }, 500);
+
+        setTimeout(() => {
+          const mapElement = document.querySelector("#map");
+          const hasMapNodes = mapElement && mapElement.children.length > 0;
+          if (!hasMapNodes) {
+            status.classList.remove("hidden");
+            status.textContent = t("mapDidNotDraw", serviceOrigin);
+          }
+        }, 1600);
       };
 
       window.naverMapLoadFailed = function naverMapLoadFailed() {
