@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>수원 공정무역 제품 판매처 지도</title>
+    <title>수원 공정무역 제품 판매처 맵</title>
     <style>
       :root {
         --fair-blue: #12336e;
@@ -54,13 +54,6 @@
         gap: 16px;
       }
 
-      .eyebrow {
-        margin: 0 0 5px;
-        color: var(--fair-green);
-        font-size: 0.82rem;
-        font-weight: 800;
-      }
-
       h1 {
         margin: 0;
         color: var(--fair-blue);
@@ -103,6 +96,7 @@
       .map-shell {
         display: grid;
         grid-template-columns: 340px 1fr;
+        width: 100%;
         max-width: 1180px;
         height: min(76svh, 720px);
         min-height: 620px;
@@ -132,13 +126,6 @@
         margin: 0 0 5px;
         font-size: 0.92rem;
         line-height: 1.3;
-      }
-
-      .directory-head p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 0.78rem;
-        line-height: 1.45;
       }
 
       .region-bar {
@@ -252,7 +239,7 @@
       .map-area {
         position: relative;
         height: 100%;
-        min-height: 0;
+        min-height: 620px;
         background: #eef2f5;
       }
 
@@ -260,21 +247,7 @@
         position: relative;
         width: 100%;
         height: 100%;
-        min-height: 0;
-      }
-
-      .map-badge {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        z-index: 20;
-        border: 1px solid var(--line);
-        border-left: 5px solid var(--fair-gold);
-        border-radius: 4px;
-        padding: 9px 11px;
-        color: var(--ink);
-        background: rgba(255, 255, 255, 0.96);
-        box-shadow: 0 8px 18px rgba(25, 39, 55, 0.12);
+        min-height: 620px;
       }
 
       .map-status {
@@ -291,16 +264,6 @@
 
       .map-status.hidden {
         display: none;
-      }
-
-      .map-badge strong {
-        display: block;
-        font-size: 0.88rem;
-      }
-
-      .map-badge span {
-        color: var(--muted);
-        font-size: 0.75rem;
       }
 
       .source {
@@ -481,11 +444,19 @@
           height: 62svh;
           min-height: 430px;
         }
+
+        #map {
+          min-height: 430px;
+        }
       }
 
       @media (max-width: 560px) {
         .map-area {
           height: 58svh;
+          min-height: 360px;
+        }
+
+        #map {
           min-height: 360px;
         }
 
@@ -827,8 +798,6 @@
             `매장을 선택했습니다. 지도가 보이지 않으면 Naver Cloud Web service URL에 ${origin}을 추가하세요.`,
           apiWrong:
             "Naver Map API가 올바르게 로드되지 않았습니다. Dynamic Map 키와 Web service URL을 다시 확인하세요.",
-          mapDidNotDraw: (origin) =>
-            `Naver Map은 로드됐지만 화면에 표시되지 않았습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
           scriptFailed: (origin) =>
             `Naver Map script를 불러오지 못했습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
         },
@@ -860,8 +829,6 @@
             `Shop selected. If the map is still blocked, add ${origin} to the Naver Cloud Web service URL.`,
           apiWrong:
             "Naver Map API loaded incorrectly. Recheck the Dynamic Map key and Web service URL.",
-          mapDidNotDraw: (origin) =>
-            `Naver Map loaded but did not appear. Add this Web service URL in Naver Cloud: ${origin}`,
           scriptFailed: (origin) =>
             `The Naver Map script failed to load. Add this Web service URL in Naver Cloud: ${origin}`,
         },
@@ -1175,17 +1142,7 @@
           map.setCenter(new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng));
           map.setZoom(initialMapZoom);
           status.classList.add("hidden");
-          console.log("Naver map initialized", document.querySelector("#map").children.length);
         }, 500);
-
-        setTimeout(() => {
-          const mapElement = document.querySelector("#map");
-          const hasMapNodes = mapElement && mapElement.children.length > 0;
-          if (!hasMapNodes) {
-            status.classList.remove("hidden");
-            status.textContent = t("mapDidNotDraw", serviceOrigin);
-          }
-        }, 1600);
       };
 
       window.naverMapLoadFailed = function naverMapLoadFailed() {
