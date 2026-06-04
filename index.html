@@ -105,12 +105,10 @@
 
       .map-shell {
         display: grid;
-        flex: 1 1 auto;
-        grid-template-columns: clamp(310px, 22vw, 360px) minmax(0, 1fr);
-        width: 100%;
-        max-width: 1500px;
-        height: clamp(560px, calc(100svh - 150px), 820px);
-        min-height: 0;
+        grid-template-columns: 340px 1fr;
+        max-width: 1180px;
+        height: min(76svh, 720px);
+        min-height: 620px;
         margin: 0 auto;
         border: 1px solid var(--line);
         border-radius: 4px;
