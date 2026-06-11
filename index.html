@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>수원 공정무역 제품 판매처 맵</title>
+    <title>수원·서울 공정무역 제품 판매처 맵</title>
     <style>
       :root {
         --fair-blue: #12336e;
         --fair-green: #2f7d59;
+        --fair-cyan: #16b7d7;
+        --fair-lime: #c7df3a;
+        --fair-black: #1f1f21;
         --ink: #202832;
         --muted: #687482;
         --line: #d9e0e5;
@@ -124,6 +127,34 @@
         line-height: 1.3;
       }
 
+
+
+      .city-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+        background: #f8fafb;
+      }
+
+      .city-tab {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+        color: var(--fair-blue);
+        font-size: 0.72rem;
+        font-weight: 900;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .city-tab[aria-selected="true"] {
+        border-color: var(--fair-cyan);
+        color: var(--fair-black);
+        background: var(--fair-lime);
+      }
+
       .region-bar {
         display: flex;
         align-items: center;
@@ -173,12 +204,12 @@
       }
 
       .place.official {
-        background: #fff8ea;
+        background: #f4fbfd;
       }
 
       .place.official:hover,
       .place.official[aria-pressed="true"] {
-        background: #fff0cf;
+        background: #e5f7fb;
       }
 
       .place-title {
@@ -201,7 +232,8 @@
       }
 
       .marker-number.official {
-        background: #d44f2f;
+        background: var(--fair-cyan);
+        color: var(--fair-black);
       }
 
       .tag {
@@ -212,7 +244,8 @@
         color: #fff;
         font-size: 0.58rem;
         font-weight: 800;
-        background: #d44f2f;
+        background: var(--fair-black);
+        box-shadow: inset 4px 0 0 var(--fair-lime);
       }
 
       .place strong {
@@ -278,21 +311,22 @@
         display: block;
         width: 28px;
         height: 38px;
+        background-image: url("data:image/svg+xml,%3Csvg width='28' height='38' viewBox='0 0 28 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 37C14 37 26 22.5 26 13.8C26 6.7 20.6 1 14 1C7.4 1 2 6.7 2 13.8C2 22.5 14 37 14 37Z' fill='%23228df0' stroke='white' stroke-width='2'/%3E%3Ccircle cx='14' cy='13.8' r='4.6' fill='white'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
+        filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.3));
       }
 
       .pin.official {
-        background-image: url("data:image/svg+xml,%3Csvg width='28' height='38' viewBox='0 0 28 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 37C14 37 26 22.5 26 13.8C26 6.7 20.6 1 14 1C7.4 1 2 6.7 2 13.8C2 22.5 14 37 14 37Z' fill='%23d44f2f' stroke='white' stroke-width='2'/%3E%3Ccircle cx='14' cy='13.8' r='4.6' fill='white'/%3E%3C/svg%3E");
-        filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.3));
+        background-image: url("data:image/svg+xml,%3Csvg width='28' height='38' viewBox='0 0 28 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 37C14 37 26 22.5 26 13.8C26 6.7 20.6 1 14 1C7.4 1 2 6.7 2 13.8C2 22.5 14 37 14 37Z' fill='%2316b7d7' stroke='white' stroke-width='2'/%3E%3Ccircle cx='14' cy='13.8' r='4.6' fill='white'/%3E%3C/svg%3E");
       }
 
       .info {
         position: relative;
         width: 310px;
         max-width: min(310px, 82vw);
-        padding: 11px 36px 11px 12px;
+        padding: 12px 42px 12px 14px;
       }
 
       .info h3 {
@@ -318,7 +352,8 @@
         color: #fff;
         font-size: 0.7rem;
         font-weight: 900;
-        background: #d44f2f;
+        color: var(--fair-black);
+        background: var(--fair-lime);
       }
 
       .info-fields {
@@ -371,8 +406,8 @@
 
       .close-info {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 8px;
+        right: 8px;
         display: grid;
         width: 22px;
         height: 22px;
@@ -384,7 +419,7 @@
         color: #fff;
         font-size: 0;
         line-height: 1;
-        background: #d44f2f;
+        background: var(--fair-cyan);
         cursor: pointer;
       }
 
@@ -468,7 +503,7 @@
       <section class="intro">
         <div class="intro-top">
           <div>
-            <h1 data-i18n="title">수원 공정무역 제품 판매처 맵</h1>
+            <h1 data-i18n="title">수원·서울 공정무역 제품 판매처 맵</h1>
           </div>
           <div class="language-toggle" aria-label="Language">
             <button class="lang-button" type="button" data-lang="ko" aria-pressed="true">한국어</button>
@@ -476,18 +511,22 @@
           </div>
         </div>
         <p class="intro-copy" data-i18n="intro">
-          GCP 프로젝트를 위해 만든 수원 공정무역 매장 지도입니다.
+          GCP 프로젝트를 위해 만든 수원·서울 공정무역 매장 지도입니다.
         </p>
       </section>
 
-      <section class="map-shell" id="map-shell" aria-label="수원 공정무역 제품 판매처 지도">
+      <section class="map-shell" id="map-shell" aria-label="수원·서울 공정무역 제품 판매처 지도">
         <aside class="directory" id="directory" aria-label="판매처 목록">
           <header class="directory-head">
-            <h2 data-i18n="directoryTitle">수원시 판매처 목록</h2>
+            <h2 data-i18n="directoryTitle">공정무역 판매처 목록</h2>
           </header>
+          <div class="city-tabs" role="tablist" aria-label="City filter">
+            <button class="city-tab" type="button" data-city="suwon" role="tab" aria-selected="true">&#49688;&#50896;</button>
+            <button class="city-tab" type="button" data-city="seoul" role="tab" aria-selected="false">&#49436;&#50872;</button>
+          </div>
           <div class="region-bar">
-            <strong data-i18n="region">수원시</strong>
-            <span class="count" id="place-count">31 places</span>
+            <strong id="active-region">&#49688;&#50896;</strong>
+            <span class="count" id="place-count">31&#44275;</span>
           </div>
           <div class="place-list" id="place-list"></div>
         </aside>
@@ -501,13 +540,15 @@
       <p class="source">
         <span data-i18n="sourceLabel">판매처 데이터:</span>
         <a href="https://www.suwon.go.kr/sw-www/deptHome/dep_eco/eco12/eco12_04.jsp" target="_blank" rel="noreferrer">
-          <span data-i18n="sourceSuwon">수원시 공정무역 제품 판매처 현황</span>
+          <span data-i18n="sourceSuwon">??? ???? ?? ??? ??</span>
+        </a>,
+        <a href="https://news.seoul.go.kr/economy/archives/4389" target="_blank" rel="noreferrer">
+          <span data-i18n="sourceSeoul">&#49436;&#50872;&#49884; &#44277;&#51221;&#47924;&#50669; &#51228;&#54408; &#44396;&#47588; &#50504;&#45236;</span>
         </a>.
-        <span data-i18n="referenceLabel">참고 형식:</span>
+        <span data-i18n="referenceLabel">Fairtrade ?? ??:</span>
         <a href="https://www.fairtrade.net/kr-ko/buy-fairtrade.html" target="_blank" rel="noreferrer">
           <span data-i18n="sourceFairtrade">Fairtrade Korea 공정무역 가게 맵</span>
         </a>.
-        <span data-i18n="stockNote">매장별 재고는 바뀔 수 있어 방문 전 확인이 좋아요.</span>
       </p>
     </main>
 
@@ -766,25 +807,1422 @@
         },
       ];
 
+      const seoulOfficialShops = [
+        {
+                "name": "디이그제큐티브센터코리아",
+                "source": "official",
+                "address": "서울특별시 강남구 테헤란로 534",
+                "addressEn": "Seoul Gangnam-gu 테헤란로 534",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.508079,
+                "lng": 127.062817,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "르몽뒤뱅",
+                "source": "official",
+                "address": "서울특별시 강남구 도산대로 420",
+                "addressEn": "Seoul Gangnam-gu 도산대로 420",
+                "phone": "",
+                "products": "원두, 아일레스 티",
+                "productsEn": "Coffee beans, Ayles tea",
+                "lat": 37.5231159,
+                "lng": 127.0419539,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "베라짜노",
+                "source": "official",
+                "address": "서울특별시 강남구 도산대로57길 13-4, 3층",
+                "addressEn": "Seoul Gangnam-gu 도산대로57길 13-4, 3층",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5246827,
+                "lng": 127.041127,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "법무법인 원",
+                "source": "official",
+                "address": "서울특별시 강남구 역삼동 강남대로 308 랜드마크타워 8F, 11F",
+                "addressEn": "서울특별시 강남구 역삼동 강남대로 308 랜드마크타워 8F, 11F",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.4906685,
+                "lng": 127.0317917,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "유니레버코리아",
+                "source": "official",
+                "address": "서울특별시 강남구 삼성로91길",
+                "addressEn": "Seoul Gangnam-gu 삼성로91길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5069114,
+                "lng": 127.0555833,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "더블루(로레알코리아 사내카페)",
+                "source": "official",
+                "address": "서울특별시 강남구 테헤란로87길",
+                "addressEn": "Seoul Gangnam-gu 테헤란로87길",
+                "phone": "",
+                "products": "티",
+                "productsEn": "Tea",
+                "lat": 37.5130417,
+                "lng": 127.0597688,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "베라짜노",
+                "source": "official",
+                "address": "서울특별시 강남구 도산대로57길 13-4, 3층",
+                "addressEn": "Seoul Gangnam-gu 도산대로57길 13-4, 3층",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.52467439999999,
+                "lng": 127.0411251,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "웰니스라운지",
+                "source": "official",
+                "address": "서울특별시 강남구 도산대로25길 38",
+                "addressEn": "Seoul Gangnam-gu 도산대로25길 38",
+                "phone": "",
+                "products": "치보 커피",
+                "productsEn": "Tchibo coffee",
+                "lat": 37.5219298,
+                "lng": 127.0264097,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄살롱안양재천 카페",
+                "source": "official",
+                "address": "서울특별시 서초구 양재천로 125-10",
+                "addressEn": "Seoul Seocho-gu 양재천로 125-10",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.478655,
+                "lng": 127.0412166,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페마당",
+                "source": "official",
+                "address": "서울특별시 강남구 도산대로45길 7",
+                "addressEn": "Seoul Gangnam-gu 도산대로45길 7",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.522743,
+                "lng": 127.0353146,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "오플비",
+                "source": "official",
+                "address": "서울특별시 강동구 성내로3길",
+                "addressEn": "Seoul Gangdong-gu 성내로3길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5315926,
+                "lng": 127.1233154,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "시립화곡청소년센터",
+                "source": "official",
+                "address": "서울특별시 강서구 곰달래로57길",
+                "addressEn": "Seoul Gangseo-gu 곰달래로57길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5347946,
+                "lng": 126.860479,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페 르네드 Lenede",
+                "source": "official",
+                "address": "서울특별시 관악구 인헌길 61",
+                "addressEn": "Seoul Gwanak-gu 인헌길 61",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.4727843,
+                "lng": 126.9668054,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "건국대학교 UNSA",
+                "source": "official",
+                "address": "서울특별시 광진구 능동로 120",
+                "addressEn": "Seoul Gwangjin-gu 능동로 120",
+                "phone": "",
+                "products": "건과일, 바나나, 초콜릿, 화장솜",
+                "productsEn": "Dried fruit, banana, chocolate, cotton pads",
+                "lat": 37.5423265,
+                "lng": 127.0759204,
+                "category": "학생 단체 & 협동조합 & 비영리법인",
+                "city": "seoul"
+        },
+        {
+                "name": "메디플래너",
+                "source": "official",
+                "address": "서울특별시 동대문구 약령중앙로10길 17, 부광빌딩 5층 503호 (제기동)",
+                "addressEn": "Seoul Dongdaemun-gu 약령중앙로10길 17, 부광빌딩 5층 503호 (제기동)",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5825617,
+                "lng": 127.0381299,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "방배노인종합복지관",
+                "source": "official",
+                "address": "서울특별시 서초구 방배천로 48",
+                "addressEn": "Seoul Seocho-gu Bangbaecheon-ro 48",
+                "phone": "",
+                "products": "미기재",
+                "productsEn": "Not listed",
+                "lat": 37.4807676,
+                "lng": 126.9827215,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "보리보리쌀 남성역본점",
+                "source": "official",
+                "address": "서울특별시 동작구 사당로14가길 19",
+                "addressEn": "Seoul Dongjak-gu Sadang-ro 14ga-gil 19",
+                "phone": "",
+                "products": "음류수",
+                "productsEn": "Beverages",
+                "lat": 37.4841592,
+                "lng": 126.9713424,
+                "category": "공정무역 제품 취급 업체 / 레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "이퀄테이블",
+                "source": "official",
+                "address": "서울특별시 마포구 백범로31길 21",
+                "addressEn": "Seoul Mapo-gu 백범로31길 21",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5467447,
+                "lng": 126.949975,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "CAFE THEN AND THERE",
+                "source": "official",
+                "address": "서울특별시 마포구 양화로21길 21 2층",
+                "addressEn": "서울특별시 마포구 양화로21길 21 2층",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.5590949,
+                "lng": 126.9248224,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "리버스 카페",
+                "source": "official",
+                "address": "서울특별시 마포구 와우산로19길 6-11",
+                "addressEn": "Seoul Mapo-gu 와우산로19길 6-11",
+                "phone": "",
+                "products": "공정무역 원두",
+                "productsEn": "Fair trade coffee beans",
+                "lat": 37.5517535,
+                "lng": 126.9228648,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "무어스",
+                "source": "official",
+                "address": "서울특별시 서대문구 통일로 107-15",
+                "addressEn": "Seoul Seodaemun-gu 통일로 107-15",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5644063,
+                "lng": 126.9671419,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초 카페늘봄 반포도서관점 (한우리 보호작업장",
+                "source": "official",
+                "address": "서울특별시 서초구 고무래로 34",
+                "addressEn": "Seoul Seocho-gu 고무래로 34",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5025458,
+                "lng": 127.0124221,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "서초구립 한우리보호작업장",
+                "source": "official",
+                "address": "서울특별시 서초구 남부순환로340길 15",
+                "addressEn": "Seoul Seocho-gu 남부순환로340길 15",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4820945,
+                "lng": 127.0252617,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "한우리보호작업장",
+                "source": "official",
+                "address": "서울특별시 서초구 서초동 380번지 립한우리보호작업장",
+                "addressEn": "서울특별시 서초구 서초동 380번지 립한우리보호작업장",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.4784015,
+                "lng": 126.9999842,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "Dear 디어",
+                "source": "official",
+                "address": "서울특별시 서초구 사평대로2길 22, 1층",
+                "addressEn": "Seoul Seocho-gu 사평대로2길 22, 1층",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.4976761,
+                "lng": 126.9856519,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "MOOD SEOUL(아영FBC)",
+                "source": "official",
+                "address": "서울특별시 서초구 올림픽대로 2085-14 솔빛섬 1층·2층",
+                "addressEn": "서울특별시 서초구 올림픽대로 2085-14 솔빛섬 1층·2층",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스 t",
+                "productsEn": "Coffee beans, chocolate, coffee mix t",
+                "lat": 37.5125134,
+                "lng": 126.9949361,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "바다축제 서초점",
+                "source": "official",
+                "address": "서울 서초구 사평대로 335 금성빌딩 1층",
+                "addressEn": "서울 서초구 사평대로 335 금성빌딩 1층",
+                "phone": "",
+                "products": "원두, 코코아",
+                "productsEn": "Coffee beans, cocoa",
+                "lat": 37.5034737,
+                "lng": 127.0197988,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "서초구청",
+                "source": "official",
+                "address": "서울특별시 서초구 남부순환로 2584",
+                "addressEn": "Seoul Seocho-gu 남부순환로 2584",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.4835872,
+                "lng": 127.0326987,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "buraha 브라하",
+                "source": "official",
+                "address": "서울특별시 서초구 방배로6길 15",
+                "addressEn": "Seoul Seocho-gu 방배로6길 15",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4793313,
+                "lng": 127.0001979,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "가프 kgaff",
+                "source": "official",
+                "address": "서울특별시 서초구 서초대로34길 19",
+                "addressEn": "Seoul Seocho-gu 서초대로34길 19",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4886586,
+                "lng": 126.9978082,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "다찌과자카페",
+                "source": "official",
+                "address": "서울특별시 서초구 서초대로65길",
+                "addressEn": "Seoul Seocho-gu 서초대로65길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4985559,
+                "lng": 127.0188871,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "미미베이커스",
+                "source": "official",
+                "address": "서울특별시 서초구 효령로25길",
+                "addressEn": "Seoul Seocho-gu 효령로25길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.481398,
+                "lng": 126.9945538,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "반포교회 커피정원",
+                "source": "official",
+                "address": "서울특별시 서초구 방배중앙로25길 15, 2층",
+                "addressEn": "Seoul Seocho-gu 방배중앙로25길 15, 2층",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4940079,
+                "lng": 126.9852232,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "방배그랑자이 스카이라운지카페 / 커뮤니티센터카페",
+                "source": "official",
+                "address": "서울특별시 서초구 방배로2길",
+                "addressEn": "Seoul Seocho-gu 방배로2길",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.47633160000001,
+                "lng": 126.9997597,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "방배노인종합복지관 (늘봄카페6호)",
+                "source": "official",
+                "address": "서울특별시 서초구 반포대로30길 12-3",
+                "addressEn": "Seoul Seocho-gu 반포대로30길 12-3",
+                "phone": "",
+                "products": "커피, 건과일",
+                "productsEn": "Coffee, dried fruit",
+                "lat": 37.4912864,
+                "lng": 127.0091718,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "베르디",
+                "source": "official",
+                "address": "서울특별시 서초구 동산로13길 48",
+                "addressEn": "Seoul Seocho-gu 동산로13길 48",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4733957,
+                "lng": 127.044153,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초 카페늘봄 방배3동주민센터점",
+                "source": "official",
+                "address": "서울 서초구 남부순환로 2584 서초구청",
+                "addressEn": "서울 서초구 남부순환로 2584 서초구청",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4783966,
+                "lng": 126.9999294,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초 카페늘봄 서초구청점",
+                "source": "official",
+                "address": "서울특별시 서초구 남부순환로 2584",
+                "addressEn": "Seoul Seocho-gu 남부순환로 2584",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.4835872,
+                "lng": 127.0326987,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초 카페늘봄 서초문화예술회관점",
+                "source": "official",
+                "address": "서울특별시 서초구 강남대로 201",
+                "addressEn": "Seoul Seocho-gu 강남대로 201",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4816879,
+                "lng": 127.0358257,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초 카페늘봄 한우리정보문화센터점",
+                "source": "official",
+                "address": "서울특별시 서초구 남부순환로340길 15",
+                "addressEn": "Seoul Seocho-gu 남부순환로340길 15",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4820175,
+                "lng": 127.0250356,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초구립양재도서관",
+                "source": "official",
+                "address": "서울특별시 서초구 양재천로 33",
+                "addressEn": "Seoul Seocho-gu 양재천로 33",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.4736607,
+                "lng": 127.0335408,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "세컨클락",
+                "source": "official",
+                "address": "서울특별시 서초구 내곡동 청룡마을길 41",
+                "addressEn": "서울특별시 서초구 내곡동 청룡마을길 41",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.4486053,
+                "lng": 127.0585206,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "손커피연구소앤 아이스크림 양재우성점",
+                "source": "official",
+                "address": "서울특별시 서초구 바우뫼로 101",
+                "addressEn": "Seoul Seocho-gu 바우뫼로 101",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.475123,
+                "lng": 127.03212,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "여의천 소원카페",
+                "source": "official",
+                "address": "서울 서초구 강남대로 73-2",
+                "addressEn": "서울 서초구 강남대로 73-2",
+                "phone": "",
+                "products": "음료, 쿠키, 마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies, madeleines, scones, dried fruit",
+                "lat": 37.47114,
+                "lng": 127.0380886,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "여의천소원카페(서초여성일자리주식회사)",
+                "source": "official",
+                "address": "서울특별시 서초구 강남대로12길 316-11",
+                "addressEn": "Seoul Seocho-gu 강남대로12길 316-11",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.4693727,
+                "lng": 127.0398193,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "유남생",
+                "source": "official",
+                "address": "서울특별시 서초구 강남대로10길 65, 103호",
+                "addressEn": "Seoul Seocho-gu 강남대로10길 65, 103호",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4698939,
+                "lng": 127.0424256,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "청계산 커피 에코",
+                "source": "official",
+                "address": "서울 서초구 청계산로 233 1층",
+                "addressEn": "서울 서초구 청계산로 233 1층",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.44482,
+                "lng": 127.057857,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페 늘봄 도로교통공단점",
+                "source": "official",
+                "address": "서울특별시 서초구 양재대로 242",
+                "addressEn": "서울특별시 서초구 양재대로 242",
+                "phone": "",
+                "products": "상세 정보: 1층",
+                "productsEn": "",
+                "lat": 37.4658679,
+                "lng": 127.0443049,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페 모호",
+                "source": "official",
+                "address": "서울 서초구 양재동 117-2",
+                "addressEn": "서울 서초구 양재동 117-2",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4742728,
+                "lng": 127.0360707,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페 무가공",
+                "source": "official",
+                "address": "서울특별시 서초구 효령로77길",
+                "addressEn": "Seoul Seocho-gu 효령로77길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.4891567,
+                "lng": 127.0299919,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페 타셴",
+                "source": "official",
+                "address": "서울특별시 서초구 효령로 321",
+                "addressEn": "Seoul Seocho-gu 효령로 321",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4858771,
+                "lng": 127.0188115,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄 내곡열린문화센터",
+                "source": "official",
+                "address": "서울특별시 서초구 청계산로15길",
+                "addressEn": "Seoul Seocho-gu 청계산로15길",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.4492961,
+                "lng": 127.0581718,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄 늘봄내곡도서관점",
+                "source": "official",
+                "address": "서울특별시 서초구 청계산로7길",
+                "addressEn": "Seoul Seocho-gu 청계산로7길",
+                "phone": "",
+                "products": "음료, 쿠키, 마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies, madeleines, scones, dried fruit",
+                "lat": 37.4518283,
+                "lng": 127.0544483,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄 반포3동주민센터",
+                "source": "official",
+                "address": "서울특별시 서초구 신반포로23길",
+                "addressEn": "Seoul Seocho-gu 신반포로23길",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.51212,
+                "lng": 127.0055897,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄 반포도서관점",
+                "source": "official",
+                "address": "서울특별시 서초구 고무래로 34",
+                "addressEn": "Seoul Seocho-gu 고무래로 34",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5025138,
+                "lng": 127.0125122,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페늘봄 양재도서관점",
+                "source": "official",
+                "address": "서울 서초구 양재천로 33 3층",
+                "addressEn": "서울 서초구 양재천로 33 3층",
+                "phone": "",
+                "products": "음료, 쿠키,마들렌, 스콘, 건과일",
+                "productsEn": "Drinks, cookies,madeleines, scones, dried fruit",
+                "lat": 37.4731977,
+                "lng": 127.0381702,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "카페에비뉴376",
+                "source": "official",
+                "address": "서울특별시 서초구 동산로10길",
+                "addressEn": "Seoul Seocho-gu 동산로10길",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4713887,
+                "lng": 127.0446472,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "파운데이 서초점",
+                "source": "official",
+                "address": "서울특별시 서초구 서운로11길",
+                "addressEn": "Seoul Seocho-gu 서운로11길",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4875575,
+                "lng": 127.0266474,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "팔월오일 커피",
+                "source": "official",
+                "address": "서울 서초구 양재동 108-6",
+                "addressEn": "서울 서초구 양재동 108-6",
+                "phone": "",
+                "products": "원두, 초콜릿, 커피믹스, 음료",
+                "productsEn": "Coffee beans, chocolate, coffee mix, drinks",
+                "lat": 37.4772831,
+                "lng": 127.0375991,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "한우리보호작업장(카페늘봄4호점 서초구민회관점)",
+                "source": "official",
+                "address": "서울특별시 서초구 양재천로 33",
+                "addressEn": "Seoul Seocho-gu 양재천로 33",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.4737315,
+                "lng": 127.0336257,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "서초여성가족플라자 잠원센터",
+                "source": "official",
+                "address": "서울특별시 서초구 잠원로8길 38",
+                "addressEn": "Seoul Seocho-gu 잠원로8길 38",
+                "phone": "",
+                "products": "젤리, 사탕, 초콜릿",
+                "productsEn": "Fair trade products",
+                "lat": 37.5135596,
+                "lng": 127.0119617,
+                "category": "학교 & 구립단체",
+                "city": "seoul"
+        },
+        {
+                "name": "사단법인 비랩코리아",
+                "source": "official",
+                "address": "서울특별시 성동구 성수이로18길",
+                "addressEn": "Seoul Seongdong-gu 성수이로18길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5421297,
+                "lng": 127.0586257,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "refreshment 리프레쉬먼트",
+                "source": "official",
+                "address": "서울특별시 성동구 상원길 82",
+                "addressEn": "Seoul Seongdong-gu 상원길 82",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5508702,
+                "lng": 127.0474565,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "동소문피스커피",
+                "source": "official",
+                "address": "서울특별시 성북구 동소문로17길",
+                "addressEn": "Seoul Seongbuk-gu 동소문로17길",
+                "phone": "",
+                "products": "커피, 차, 초콜릿, 맥주",
+                "productsEn": "Coffee, tea, chocolate, beer",
+                "lat": 37.5938035,
+                "lng": 127.0153019,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "쇼콜라팔레트 송리단길점",
+                "source": "official",
+                "address": "서울특별시 송파구 백제고분로45길 16",
+                "addressEn": "Seoul Songpa-gu 백제고분로45길 16",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5098556,
+                "lng": 127.1097048,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "보사노바 목동점(신정점)",
+                "source": "official",
+                "address": "서울특별시 양천구 중앙로45길",
+                "addressEn": "Seoul Yangcheon-gu 중앙로45길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5209391,
+                "lng": 126.8520155,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "Harney & Sons 하니앤손스",
+                "source": "official",
+                "address": "서울특별시 양천구 신목로2길 68",
+                "addressEn": "Seoul Yangcheon-gu 신목로2길 68",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5237249,
+                "lng": 126.8774068,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "보사노바 베이커리 신정점",
+                "source": "official",
+                "address": "서울특별시 양천구 중앙로45길",
+                "addressEn": "Seoul Yangcheon-gu 중앙로45길",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5209883,
+                "lng": 126.8519566,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "유진투자증권(주)",
+                "source": "official",
+                "address": "서울특별시 영등포구 여의나루로 81",
+                "addressEn": "Seoul Yeongdeungpo-gu 여의나루로 81",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5246092,
+                "lng": 126.9274794,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "디이그제큐티브센터 Three IFC",
+                "source": "official",
+                "address": "서울특별시 영등포구 국제금융로 10",
+                "addressEn": "Seoul Yeongdeungpo-gu 국제금융로 10",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5249782,
+                "lng": 126.9252984,
+                "category": "공정무역 제품 취급 업체 / 사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "(주)케이클라비스투자자문",
+                "source": "official",
+                "address": "서울특별시 영등포구 여의나루로 57",
+                "addressEn": "Seoul Yeongdeungpo-gu 여의나루로 57",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.5234532,
+                "lng": 126.9254313,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "Manhole Coffee Western",
+                "source": "official",
+                "address": "서울특별시 영등포구 영신로47길 12",
+                "addressEn": "Seoul Yeongdeungpo-gu 영신로47길 12",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.5232565,
+                "lng": 126.8995595,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "디이그제큐티브센터 코리아(여의도 하나투자증권지점",
+                "source": "official",
+                "address": "서울특별시 영등포구 의사당대로 82",
+                "addressEn": "Seoul Yeongdeungpo-gu 의사당대로 82",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5225758,
+                "lng": 126.9218048,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "맨홀커피",
+                "source": "official",
+                "address": "서울특별시 영등포구 영신로 247",
+                "addressEn": "Seoul Yeongdeungpo-gu 영신로 247",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.5291417,
+                "lng": 126.9038269,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "보사노바 커피 로스터스 문래점",
+                "source": "official",
+                "address": "서울특별시 영등포구 영등포로20길 22",
+                "addressEn": "Seoul Yeongdeungpo-gu 영등포로20길 22",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.51994,
+                "lng": 126.8920094,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "노노샵",
+                "source": "official",
+                "address": "서울특별시 용산구 보광로46길",
+                "addressEn": "Seoul Yongsan-gu 보광로46길",
+                "phone": "",
+                "products": "토니스 초콜릿 일부 품목",
+                "productsEn": "Fair trade products",
+                "lat": 37.5311078,
+                "lng": 126.9958299,
+                "category": "샵",
+                "city": "seoul"
+        },
+        {
+                "name": "베이커리 무이(無二)",
+                "source": "official",
+                "address": "서울특별시 용산구 원효로81길",
+                "addressEn": "Seoul Yongsan-gu 원효로81길",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.5396354,
+                "lng": 126.9668649,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "해방공원(HB01)",
+                "source": "official",
+                "address": "서울특별시 용산구 소월로20길",
+                "addressEn": "Seoul Yongsan-gu 소월로20길",
+                "phone": "",
+                "products": "아일레스 공정무역 티",
+                "productsEn": "Ayles fair trade tea",
+                "lat": 37.5453551,
+                "lng": 126.98512,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "9-4",
+                "source": "official",
+                "address": "서울특별시 종로구 사직로10길 9-4",
+                "addressEn": "Seoul Jongno-gu 사직로10길 9-4",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5754089,
+                "lng": 126.9705526,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "디이그제큐티브센터코리아(주)",
+                "source": "official",
+                "address": "서울특별시 중구 세종대로 136",
+                "addressEn": "Seoul Jung-gu 세종대로 136",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5683689,
+                "lng": 126.97779,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        },
+        {
+                "name": "코리아 페어트레이드 센터(국제공정무역기구 한국사무소)",
+                "source": "official",
+                "address": "서울특별시 종로구 동숭길 133",
+                "addressEn": "Seoul Jongno-gu 동숭길 133",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5835951,
+                "lng": 127.0024233,
+                "category": "공정무역 제품 취급 업체 / 샵",
+                "city": "seoul"
+        },
+        {
+                "name": "핏제리아오 대학로본점",
+                "source": "official",
+                "address": "서울특별시 종로구 동숭길 86",
+                "addressEn": "Seoul Jongno-gu 동숭길 86",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5820433,
+                "lng": 127.0042774,
+                "category": "레스토랑",
+                "city": "seoul"
+        },
+        {
+                "name": "(재) 아름다운커피",
+                "source": "official",
+                "address": "서울특별시 종로구 창경궁로 265",
+                "addressEn": "Seoul Jongno-gu 창경궁로 265",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5855417,
+                "lng": 126.9994142,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "메가룩스",
+                "source": "official",
+                "address": "서울특별시 중구 을지로 163",
+                "addressEn": "Seoul Jung-gu 을지로 163",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.5666671,
+                "lng": 126.996091,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "정동빌딩",
+                "source": "official",
+                "address": "서울특별시 중구 정동길 02-01",
+                "addressEn": "Seoul Jung-gu 정동길 02-01",
+                "phone": "",
+                "products": "원두, 길리안 초콜릿",
+                "productsEn": "Coffee beans, Guylian chocolate",
+                "lat": 37.5676529,
+                "lng": 126.97116,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "초록우산 어린이재단",
+                "source": "official",
+                "address": "서울 중구 무교동 95",
+                "addressEn": "서울 중구 무교동 95",
+                "phone": "",
+                "products": "공정무역물품",
+                "productsEn": "Fair trade products",
+                "lat": 37.5675795,
+                "lng": 126.979552,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "플래닛주민센터",
+                "source": "official",
+                "address": "서울특별시 중구 청계천로 274",
+                "addressEn": "Seoul Jung-gu 청계천로 274",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5684894,
+                "lng": 126.9816134,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "행복나래",
+                "source": "official",
+                "address": "서울 중구 순화동 2-6",
+                "addressEn": "서울 중구 순화동 2-6",
+                "phone": "",
+                "products": "02-6250-4752",
+                "productsEn": "02-6250-4752",
+                "lat": 37.563847,
+                "lng": 126.971312,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "그린풀",
+                "source": "official",
+                "address": "서울특별시 종로구 동숭길 130-5",
+                "addressEn": "Seoul Jongno-gu 동숭길 130-5",
+                "phone": "",
+                "products": "커피, 와인",
+                "productsEn": "Coffee, wine",
+                "lat": 37.5838922,
+                "lng": 127.0030715,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "베란다",
+                "source": "official",
+                "address": "서울특별시 종로구 사직로10길 9-4",
+                "addressEn": "Seoul Jongno-gu 사직로10길 9-4",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5753565,
+                "lng": 126.9705364,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "페어트레이드 카페앤숍",
+                "source": "official",
+                "address": "서울특별시 종로구 동숭길 133",
+                "addressEn": "Seoul Jongno-gu 동숭길 133",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5836157,
+                "lng": 127.0024255,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "한국방송통신대학교 본관",
+                "source": "official",
+                "address": "서울특별시 종로구 대학로 86",
+                "addressEn": "Seoul Jongno-gu 대학로 86",
+                "phone": "",
+                "products": "공정무역 물품",
+                "productsEn": "Fair trade products",
+                "lat": 37.5794781,
+                "lng": 127.0029667,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "한국방송통신대학교 소비자생활협동조합",
+                "source": "official",
+                "address": "서울특별시 종로구 대학로 86",
+                "addressEn": "Seoul Jongno-gu 대학로 86",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5788204,
+                "lng": 127.0029303,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "해인카페",
+                "source": "official",
+                "address": "서울특별시 종로구 삼봉로 57",
+                "addressEn": "Seoul Jongno-gu 삼봉로 57",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.5722779,
+                "lng": 126.9804272,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "옥스팜코리아(재단)",
+                "source": "official",
+                "address": "서울특별시 중구 세종대로 119",
+                "addressEn": "Seoul Jung-gu 세종대로 119",
+                "phone": "",
+                "products": "선물세트",
+                "productsEn": "Fair trade products",
+                "lat": 37.566683,
+                "lng": 126.976554,
+                "category": "학생 단체 & 협동조합 & 비영리법인",
+                "city": "seoul"
+        },
+        {
+                "name": "(주)아영 FBC",
+                "source": "official",
+                "address": "서울특별시 중구 퇴계로46길",
+                "addressEn": "Seoul Jung-gu 퇴계로46길",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.5614298,
+                "lng": 126.9997782,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "주한 독일 대사관",
+                "source": "official",
+                "address": "서울특별시 중구 한강대로 416",
+                "addressEn": "Seoul Jung-gu 한강대로 416",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.5554991,
+                "lng": 126.9737296,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "주한 유럽연합 대표부",
+                "source": "official",
+                "address": "서울특별시 중구 한강대로 416",
+                "addressEn": "Seoul Jung-gu 한강대로 416",
+                "phone": "",
+                "products": "원두, 길리안 초콜릿",
+                "productsEn": "Coffee beans, Guylian chocolate",
+                "lat": 37.5556214,
+                "lng": 126.9735298,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "주한유럽상공회의소",
+                "source": "official",
+                "address": "서울특별시 중구 한강대로 416",
+                "addressEn": "Seoul Jung-gu 한강대로 416",
+                "phone": "",
+                "products": "원두",
+                "productsEn": "Coffee beans",
+                "lat": 37.5554652,
+                "lng": 126.9737482,
+                "category": "사내공정무역",
+                "city": "seoul"
+        },
+        {
+                "name": "열매나눔재단",
+                "source": "official",
+                "address": "서울특별시 중구 퇴계로20가길 30",
+                "addressEn": "Seoul Jung-gu 퇴계로20가길 30",
+                "phone": "",
+                "products": "",
+                "productsEn": "",
+                "lat": 37.5585597,
+                "lng": 126.9864015,
+                "category": "사회적기업",
+                "city": "seoul"
+        },
+        {
+                "name": "디어(DEER)",
+                "source": "official",
+                "address": "서울특별시 중구 서애로 12-04",
+                "addressEn": "Seoul Jung-gu 서애로 12-04",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.561409,
+                "lng": 126.9976873,
+                "category": "카페",
+                "city": "seoul"
+        },
+        {
+                "name": "그물코협동조합",
+                "source": "official",
+                "address": "서울특별시 중랑구 신내로17길",
+                "addressEn": "Seoul Jungnang-gu 신내로17길",
+                "phone": "",
+                "products": "커피",
+                "productsEn": "Coffee",
+                "lat": 37.6154192,
+                "lng": 127.0944133,
+                "category": "공정무역 제품 취급 업체",
+                "city": "seoul"
+        }
+];
+
+      shops.forEach((shop) => {
+        shop.city = "suwon";
+        shop.source = shop.source || "city";
+      });
+
+      const seoulPhoneNumbers = {
+        "디이그제큐티브센터코리아": "02-3782-4500",
+        "법무법인 원": "02-3019-3900",
+        "유니레버코리아": "02-709-1900",
+        "웰니스라운지": "010-5920-1811",
+        "카페마당": "02-546-3643",
+        "오플비": "02-474-0561",
+        "시립화곡청소년센터": "02-2061-1318",
+        "방배노인종합복지관": "02-581-7992",
+        "보리보리쌀 남성역본점": "02-523-3366",
+        "이퀄테이블": "070-7954-3783",
+        "무어스": "02-6052-4746",
+        "한우리보호작업장": "02-2055-0913",
+        "바다축제 서초점": "02-546-7778",
+        "서초구청": "02-2155-6114",
+        "가프 kgaff": "070-4027-1649",
+        "서초구립양재도서관": "02-3486-4050",
+        "세컨클락": "02-594-7606",
+        "유남생": "02-6091-8035",
+        "카페 모호": "010-9014-8875",
+        "카페 무가공": "02-586-3715",
+        "팔월오일 커피": "070-8864-1122",
+        "서초여성가족플라자 잠원센터": "02-522-0291",
+        "refreshment 리프레쉬먼트": "070-7755-2023",
+        "보사노바 베이커리 신정점": "02-2602-3038",
+        "유진투자증권(주)": "02-368-6600",
+        "디이그제큐티브센터 Three IFC": "02-6138-4500",
+        "맨홀커피": "02-6398-9427",
+        "보사노바 커피 로스터스 문래점": "02-2633-0038",
+        "해방공원(HB01)": "02-6956-0157",
+        "디이그제큐티브센터코리아(주)": "02-3782-4500",
+        "메가룩스": "02-2265-6911",
+        "초록우산 어린이재단": "02-775-9122",
+        "행복나래": "02-6250-4752",
+        "그린풀": "02-6951-1370",
+        "한국방송통신대학교 소비자생활협동조합": "02-3668-4175",
+        "주한 독일 대사관": "02-748-4114",
+        "주한 유럽연합 대표부": "02-3704-1700",
+        "주한유럽상공회의소": "02-6261-2700",
+        "열매나눔재단": "02-310-9508",
+      };
+
+      seoulOfficialShops.forEach((shop) => {
+        if (seoulPhoneNumbers[shop.name]) {
+          shop.phone = seoulPhoneNumbers[shop.name];
+        }
+        if (shop.name === "행복나래" && shop.products === shop.phone) {
+          shop.products = "";
+          shop.productsEn = "";
+        }
+      });
+
+      const allShops = [...shops, ...seoulOfficialShops];
+      const cityCenters = {
+        suwon: { lat: 37.2498, lng: 127.0754, zoom: 15 },
+        seoul: { lat: 37.5963, lng: 127.0527, zoom: 15 },
+      };
+
+
       const translations = {
         ko: {
-          documentTitle: "수원 공정무역 제품 판매처 맵",
-          title: "수원 공정무역 제품 판매처 맵",
-          intro: "GCP 프로젝트를 위해 만든 수원 공정무역 매장 지도입니다.",
-          mapShellLabel: "수원 공정무역 제품 판매처 지도",
+          documentTitle: "수원·서울 공정무역 제품 판매처 맵",
+          title: "수원·서울 공정무역 제품 판매처 맵",
+          intro: "GCP 프로젝트를 위해 만든 수원·서울 공정무역 매장 지도입니다.",
+          mapShellLabel: "수원·서울 공정무역 제품 판매처 지도",
           directoryLabel: "판매처 목록",
-          directoryTitle: "수원시 판매처 목록",
-          region: "수원시",
+          directoryTitle: "공정무역 판매처 목록",
+          region: "수원·서울",
+          citySuwon: "수원",
+          citySeoul: "서울",
+          cityTabsLabel: "도시 선택",
           count: (total) => `${total}곳`,
           mapLoading: "Naver Map loading...",
           sourceLabel: "판매처 데이터:",
           sourceSuwon: "수원시 공정무역 제품 판매처 현황",
-          referenceLabel: "참고 형식:",
+          sourceSeoul: "서울시 공정무역 제품 구매 안내",
+          referenceLabel: "Fairtrade 공식 지도:",
           sourceFairtrade: "Fairtrade Korea 공정무역 가게 맵",
-          stockNote: "매장별 재고는 바뀔 수 있어 방문 전 확인이 좋아요.",
           certified: "fairtrade-certified",
           addressLabel: "주소",
           productLabel: "제품",
+          productsNotListed: "미기재",
           phoneLabel: "전화",
           naverMap: "네이버지도",
           googleMap: "구글지도",
@@ -799,23 +2237,27 @@
             `Naver Map script를 불러오지 못했습니다. Naver Cloud에 이 Web service URL을 추가하세요: ${origin}`,
         },
         en: {
-          documentTitle: "Suwon Fair Trade Shop Map",
-          title: "Suwon Fair Trade Shop Map",
-          intro: "A map of fair trade shops in Suwon, made for our GCP project.",
-          mapShellLabel: "Suwon fair trade shop map",
+          documentTitle: "Suwon and Seoul Fair Trade Shop Map",
+          title: "Suwon and Seoul Fair Trade Shop Map",
+          intro: "A map of fair trade shops in Suwon and Seoul, made for our GCP project.",
+          mapShellLabel: "Suwon and Seoul fair trade shop map",
           directoryLabel: "Shop list",
-          directoryTitle: "Suwon Shop List",
-          region: "Suwon",
+          directoryTitle: "Fair Trade Shop List",
+          region: "Suwon · Seoul",
+          citySuwon: "Suwon",
+          citySeoul: "Seoul",
+          cityTabsLabel: "Choose city",
           count: (total) => `${total} places`,
           mapLoading: "Naver Map loading...",
           sourceLabel: "Shop data:",
           sourceSuwon: "Suwon City's fair trade product seller list",
-          referenceLabel: "Map format reference:",
+          sourceSeoul: "Seoul City fair trade product buying guide",
+          referenceLabel: "Fairtrade official map:",
           sourceFairtrade: "Fairtrade Korea shop map",
-          stockNote: "Product availability may change, so please check before visiting.",
           certified: "fairtrade-certified",
           addressLabel: "Address",
           productLabel: "Products",
+          productsNotListed: "Not listed",
           phoneLabel: "Phone",
           naverMap: "Naver Map",
           googleMap: "Google Maps",
@@ -863,6 +2305,107 @@
         "플로르까사 영통구점": "Flor Casa Yeongtong-gu Branch",
         "보난자커피 스타필드 수원점": "Bonanza Coffee Starfield Suwon Branch",
         "보난자커피 타임빌라스 수원점": "Bonanza Coffee Time Villas Suwon Branch",
+        "디이그제큐티브센터코리아": "The Executive Centre Korea",
+        "르몽뒤뱅": "Le Monde du Vin",
+        "베라짜노": "Verazzano",
+        "법무법인 원": "Law Firm One",
+        "유니레버코리아": "Unilever Korea",
+        "더블루(로레알코리아 사내카페)": "The Blue (L'Oreal Korea Staff Cafe)",
+        "웰니스라운지": "Wellness Lounge",
+        "카페늘봄살롱안양재천 카페": "Cafe Neulbom Salon Anyangcheon Cafe",
+        "카페마당": "Cafe Madang",
+        "오플비": "Ople B",
+        "시립화곡청소년센터": "Hwagok Youth Center",
+        "카페 르네드 Lenede": "Cafe Lenede",
+        "건국대학교 UNSA": "Konkuk University UNSA",
+        "메디플래너": "Medi Planner",
+        "방배노인종합복지관": "Bangbae Senior Welfare Center",
+        "보리보리쌀 남성역본점": "Boribori Rice Namseong Station Main Branch",
+        "이퀄테이블": "Equal Table",
+        "CAFE THEN AND THERE": "CAFE THEN AND THERE",
+        "리버스 카페": "Reverse Cafe",
+        "무어스": "Moors",
+        "서초 카페늘봄 반포도서관점 (한우리 보호작업장": "Seocho Cafe Neulbom Banpo Library Branch (Hanuri Sheltered Workshop)",
+        "서초구립 한우리보호작업장": "Seocho Hanuri Sheltered Workshop",
+        "한우리보호작업장": "Hanuri Sheltered Workshop",
+        "Dear 디어": "Dear",
+        "MOOD SEOUL(아영FBC)": "MOOD SEOUL (Ayoung FBC)",
+        "바다축제 서초점": "Bada Festival Seocho Branch",
+        "서초구청": "Seocho-gu Office",
+        "buraha 브라하": "buraha",
+        "가프 kgaff": "kgaff",
+        "다찌과자카페": "Dazzi Snack Cafe",
+        "미미베이커스": "Mimi Bakers",
+        "반포교회 커피정원": "Banpo Church Coffee Garden",
+        "방배그랑자이 스카이라운지카페 / 커뮤니티센터카페": "Bangbae Grand Xi Skylounge Cafe / Community Center Cafe",
+        "방배노인종합복지관 (늘봄카페6호)": "Bangbae Senior Welfare Center (Neulbom Cafe No. 6)",
+        "베르디": "Verdi",
+        "서초 카페늘봄 방배3동주민센터점": "Seocho Cafe Neulbom Bangbae 3-dong Community Center Branch",
+        "서초 카페늘봄 서초구청점": "Seocho Cafe Neulbom Seocho-gu Office Branch",
+        "서초 카페늘봄 서초문화예술회관점": "Seocho Cafe Neulbom Seocho Culture and Arts Center Branch",
+        "서초 카페늘봄 한우리정보문화센터점": "Seocho Cafe Neulbom Hanuri Information Culture Center Branch",
+        "서초구립양재도서관": "Seocho Yangjae Library",
+        "세컨클락": "Second Clock",
+        "손커피연구소앤 아이스크림 양재우성점": "Son Coffee Lab & Ice Cream Yangjae Woosung Branch",
+        "여의천 소원카페": "Yeouicheon Sowon Cafe",
+        "여의천소원카페(서초여성일자리주식회사)": "Yeouicheon Sowon Cafe (Seocho Women's Jobs Co.)",
+        "유남생": "Yunamsaeng",
+        "청계산 커피 에코": "Cheonggyesan Coffee Eco",
+        "카페 늘봄 도로교통공단점": "Cafe Neulbom Road Traffic Authority Branch",
+        "카페 모호": "Cafe Moho",
+        "카페 무가공": "Cafe Mugagong",
+        "카페 타셴": "Cafe Taschen",
+        "카페늘봄 내곡열린문화센터": "Cafe Neulbom Naegok Open Culture Center",
+        "카페늘봄 늘봄내곡도서관점": "Cafe Neulbom Neulbom Naegok Library Branch",
+        "카페늘봄 반포3동주민센터": "Cafe Neulbom Banpo 3-dong Community Center",
+        "카페늘봄 반포도서관점": "Cafe Neulbom Banpo Library Branch",
+        "카페늘봄 양재도서관점": "Cafe Neulbom Yangjae Library Branch",
+        "카페에비뉴376": "Cafe Avenue 376",
+        "파운데이 서초점": "Founday Seocho Branch",
+        "팔월오일 커피": "August 5 Coffee",
+        "한우리보호작업장(카페늘봄4호점 서초구민회관점)": "Hanuri Sheltered Workshop (Cafe Neulbom No. 4 Seocho Civic Center Branch)",
+        "서초여성가족플라자 잠원센터": "Seocho Women and Family Plaza Jamwon Center",
+        "사단법인 비랩코리아": "B Lab Korea",
+        "refreshment 리프레쉬먼트": "Refreshment",
+        "동소문피스커피": "Dongsomun Peace Coffee",
+        "쇼콜라팔레트 송리단길점": "Chocolat Palette Songridan-gil Branch",
+        "보사노바 목동점(신정점)": "Bossa Nova Mokdong Branch (Sinjeong Branch)",
+        "Harney & Sons 하니앤손스": "Harney & Sons",
+        "보사노바 베이커리 신정점": "Bossa Nova Bakery Sinjeong Branch",
+        "유진투자증권(주)": "Eugene Investment & Securities",
+        "디이그제큐티브센터 Three IFC": "The Executive Centre Three IFC",
+        "(주)케이클라비스투자자문": "K Clavis Investment Advisory",
+        "Manhole Coffee Western": "Manhole Coffee Western",
+        "디이그제큐티브센터 코리아(여의도 하나투자증권지점": "The Executive Centre Korea (Yeouido Hana Investment & Securities Branch)",
+        "맨홀커피": "Manhole Coffee",
+        "보사노바 커피 로스터스 문래점": "Bossa Nova Coffee Roasters Mullae Branch",
+        "노노샵": "Nono Shop",
+        "베이커리 무이(無二)": "Bakery Mui",
+        "해방공원(HB01)": "Haebang Park (HB01)",
+        "9-4": "9-4",
+        "디이그제큐티브센터코리아(주)": "The Executive Centre Korea",
+        "코리아 페어트레이드 센터(국제공정무역기구 한국사무소)": "Korea Fairtrade Center (Fairtrade Korea Office)",
+        "핏제리아오 대학로본점": "Pizzeria O Daehakro Main Branch",
+        "(재) 아름다운커피": "Beautiful Coffee Foundation",
+        "메가룩스": "Megalux",
+        "정동빌딩": "Jeongdong Building",
+        "초록우산 어린이재단": "ChildFund Korea",
+        "플래닛주민센터": "Planet Community Center",
+        "행복나래": "Happiness Narae",
+        "그린풀": "Greenpool",
+        "베란다": "Veranda",
+        "페어트레이드 카페앤숍": "Fairtrade Cafe & Shop",
+        "한국방송통신대학교 본관": "Korea National Open University Main Building",
+        "한국방송통신대학교 소비자생활협동조합": "Korea National Open University Consumer Cooperative",
+        "해인카페": "Haein Cafe",
+        "옥스팜코리아(재단)": "Oxfam Korea Foundation",
+        "(주)아영 FBC": "Ayoung FBC",
+        "주한 독일 대사관": "Embassy of Germany in Korea",
+        "주한 유럽연합 대표부": "Delegation of the European Union to Korea",
+        "주한유럽상공회의소": "European Chamber of Commerce in Korea",
+        "열매나눔재단": "Merry Year Foundation",
+        "디어(DEER)": "DEER",
+        "그물코협동조합": "Geumulko Cooperative",
       };
 
       const productTranslations = {
@@ -893,24 +2436,30 @@
           "Bonanza Single Origin Caballero Honduras",
       };
 
-      function naverMapLink(address) {
-        return `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
+      function naverMapLink(shop) {
+        const query = (shop.address || "").trim();
+        return query
+          ? `https://map.naver.com/p/search/${encodeURIComponent(query)}`
+          : "https://map.naver.com/p";
       }
 
-      function googleMapLink(address) {
-        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+      function googleMapLink(shop) {
+        if (Number.isFinite(shop.lat) && Number.isFinite(shop.lng)) {
+          return `https://www.google.com/maps/search/?api=1&query=${shop.lat},${shop.lng}`;
+        }
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop.address)}`;
       }
 
       const status = document.querySelector("#map-status");
       const list = document.querySelector("#place-list");
       const placeCount = document.querySelector("#place-count");
+      const activeRegion = document.querySelector("#active-region");
       const mapShell = document.querySelector("#map-shell");
       const directory = document.querySelector("#directory");
       const serviceOrigin = window.location.origin;
       const markers = [];
       const infoWindows = [];
-      const initialMapCenter = { lat: 37.2498, lng: 127.0754 };
-      const initialMapZoom = 15;
+      let activeCity = "suwon";
       let map = null;
       let mapsApi = null;
       let selectedShop = 0;
@@ -922,13 +2471,41 @@
       }
 
       function shopName(shop) {
-        return currentLanguage === "en" ? nameTranslations[shop.name] || shop.name : shop.name;
+        return currentLanguage === "en" ? shop.nameEn || nameTranslations[shop.name] || shop.name : shop.name;
+      }
+
+      function capitalizeFirst(value) {
+        if (!value || currentLanguage !== "en") return value;
+        return value.charAt(0).toUpperCase() + value.slice(1);
       }
 
       function shopProducts(shop) {
-        return currentLanguage === "en"
-          ? productTranslations[shop.products] || shop.products
-          : shop.products;
+        const products = shop.products || t("productsNotListed");
+        const localized = currentLanguage === "en"
+          ? shop.productsEn || productTranslations[products] || products
+          : products;
+        return capitalizeFirst(localized);
+      }
+
+      function shopAddress(shop) {
+        return shop.address;
+      }
+
+      function filteredShopEntries() {
+        return allShops
+          .map((shop, index) => ({ shop, index }))
+          .filter(({ shop }) => shop.city === activeCity);
+      }
+
+      function updatePlaceCount() {
+        const visibleTotal = filteredShopEntries().length;
+        placeCount.textContent = t("count", visibleTotal);
+        activeRegion.textContent = t(activeCity === "suwon" ? "citySuwon" : "citySeoul");
+        document.querySelectorAll("[data-city]").forEach((button) => {
+          const selected = button.dataset.city === activeCity;
+          button.setAttribute("aria-selected", String(selected));
+          button.textContent = t(button.dataset.city === "suwon" ? "citySuwon" : "citySeoul");
+        });
       }
 
       function renderStaticText() {
@@ -937,7 +2514,7 @@
         document.querySelectorAll("[data-i18n]").forEach((element) => {
           element.textContent = t(element.dataset.i18n);
         });
-        placeCount.textContent = t("count", shops.length);
+        updatePlaceCount();
         mapShell.setAttribute("aria-label", t("mapShellLabel"));
         directory.setAttribute("aria-label", t("directoryLabel"));
         document.querySelectorAll("[data-lang]").forEach((button) => {
@@ -954,7 +2531,7 @@
             <div class="info-fields">
               <div class="info-row">
                 <span class="info-label">${t("addressLabel")}</span>
-                <p>${shop.address}</p>
+                <p>${shopAddress(shop)}</p>
               </div>
               <div class="info-row">
                 <span class="info-label">${t("productLabel")}</span>
@@ -970,8 +2547,8 @@
               }
             </div>
             <div class="info-actions">
-              <a href="${naverMapLink(shop.address)}" target="_blank" rel="noreferrer">${t("naverMap")}</a>
-              <a href="${googleMapLink(shop.address)}" target="_blank" rel="noreferrer">${t("googleMap")}</a>
+              <a href="${naverMapLink(shop)}" target="_blank" rel="noreferrer">${t("naverMap")}</a>
+              <a href="${googleMapLink(shop)}" target="_blank" rel="noreferrer">${t("googleMap")}</a>
             </div>
           </div>
         `;
@@ -980,12 +2557,12 @@
       function refreshInfoWindows() {
         infoWindows.forEach((infoWindow, index) => {
           if (typeof infoWindow.setContent === "function") {
-            infoWindow.setContent(createInfoContent(shops[index], index));
+            infoWindow.setContent(createInfoContent(allShops[index], index));
           }
         });
         markers.forEach((marker, index) => {
           if (typeof marker.setTitle === "function") {
-            marker.setTitle(shopName(shops[index]));
+            marker.setTitle(shopName(allShops[index]));
           }
         });
       }
@@ -1002,6 +2579,10 @@
         button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
 
+      document.querySelectorAll("[data-city]").forEach((button) => {
+        button.addEventListener("click", () => setCity(button.dataset.city));
+      });
+
       window.navermap_authFailure = function navermap_authFailure() {
         status.classList.remove("hidden");
         status.textContent = t("authFailure");
@@ -1009,8 +2590,8 @@
 
       function renderList() {
         list.innerHTML = "";
-        shops.forEach((shop, index) => {
-          const number = index + 1;
+        filteredShopEntries().forEach(({ shop, index }, visibleIndex) => {
+          const number = visibleIndex + 1;
           const item = document.createElement("button");
           item.className = `place ${shop.source === "official" ? "official" : ""}`;
           item.type = "button";
@@ -1022,7 +2603,7 @@
               <strong>${shopName(shop)}</strong>
             </span>
             ${shop.source === "official" ? `<span class="tag">${t("certified")}</span>` : ""}
-            <p>${shop.address}</p>
+            <p>${shopAddress(shop)}</p>
             <p class="products">${shopProducts(shop)}</p>
           `;
           item.addEventListener("click", () => selectShop(index, true));
@@ -1036,6 +2617,31 @@
         });
       }
 
+      function syncMarkerVisibility() {
+        if (!map) return;
+        markers.forEach((marker, index) => {
+          if (typeof marker.setMap === "function") {
+            marker.setMap(allShops[index].city === activeCity ? map : null);
+          }
+        });
+      }
+
+      function setCity(city) {
+        if (!cityCenters[city]) return;
+        activeCity = city;
+        const firstVisible = filteredShopEntries()[0];
+        selectedShop = firstVisible ? firstVisible.index : -1;
+        renderStaticText();
+        renderList();
+        infoWindows.forEach((infoWindow) => infoWindow.close());
+        syncMarkerVisibility();
+        if (map && mapsApi) {
+          const center = cityCenters[activeCity];
+          map.setCenter(new mapsApi.LatLng(center.lat, center.lng));
+          map.setZoom(center.zoom);
+        }
+      }
+
       function selectShop(index, moveMap) {
         selectedShop = index;
         updateSelectedListItem();
@@ -1046,7 +2652,7 @@
         }
 
         infoWindows.forEach((infoWindow) => infoWindow.close());
-        const shop = shops[index];
+        const shop = allShops[index];
         if (moveMap) {
           map.setCenter(new mapsApi.LatLng(shop.lat, shop.lng));
           map.setZoom(15);
@@ -1086,9 +2692,10 @@
         mapsApi = maps;
         status.textContent = t("mapLoading");
 
+        const center = cityCenters[activeCity];
         map = new maps.Map("map", {
-          center: new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng),
-          zoom: initialMapZoom,
+          center: new maps.LatLng(center.lat, center.lng),
+          zoom: center.zoom,
           minZoom: 11,
           maxZoom: 18,
           mapTypeControl: false,
@@ -1100,21 +2707,18 @@
           },
         });
 
-        shops.forEach((shop, index) => {
-          const number = index + 1;
+        allShops.forEach((shop, index) => {
           const position = new maps.LatLng(shop.lat, shop.lng);
           const markerOptions = {
             position,
             map,
             title: shopName(shop),
-          };
-          if (shop.source === "official") {
-            markerOptions.icon = {
-              content: `<span class="pin official" aria-label="fairtrade-certified shop"></span>`,
+            icon: {
+              content: `<span class="pin ${shop.source === "official" ? "official" : ""}" aria-label="${shop.source === "official" ? "fairtrade-certified shop" : "fair trade shop"}"></span>`,
               size: new maps.Size(28, 38),
               anchor: new maps.Point(14, 38),
-            };
-          }
+            },
+          };
           const marker = new maps.Marker(markerOptions);
 
           const infoWindow = new maps.InfoWindow({
@@ -1136,8 +2740,10 @@
 
         setTimeout(() => {
           maps.Event.trigger(map, "resize");
-          map.setCenter(new maps.LatLng(initialMapCenter.lat, initialMapCenter.lng));
-          map.setZoom(initialMapZoom);
+          const currentCenter = cityCenters[activeCity];
+          syncMarkerVisibility();
+          map.setCenter(new maps.LatLng(currentCenter.lat, currentCenter.lng));
+          map.setZoom(currentCenter.zoom);
           status.classList.add("hidden");
         }, 500);
       };
